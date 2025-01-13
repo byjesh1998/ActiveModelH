@@ -223,6 +223,8 @@ ax1.spines["top"].set_linewidth(2)
 ax1.set_xticks([])
 ax1.set_yticks([])
 
+plt.text(-19.51,140.1,r"$(a)$",fontsize=27)
+
 eppr=grad.sum()
 ax1.text(-5.5e-1, -9.95, r'$\int \sigma d {\bf r}=%.2g$' %eppr, size=2.5*1e1)
 #ax1.text(791.5e-1, -8.95, r'$ \sigma = \psi \nabla ^{4} \psi$', size=2.5*1e1) #( \nabla ^{2} \psi)^{2}
@@ -243,6 +245,8 @@ cbar.ax.yaxis.set_label_coords(-0.08,-1.5)
 #ax1.add_patch(Rectangle((20, 75), 25, 25,edgecolor='black',
 #                    facecolor='none',
 #                    lw=1.5))
+
+
 
 ax1.set_aspect('equal')
 
@@ -277,6 +281,11 @@ ax.spines["right"].set_linewidth(2)
 ax.spines["top"].set_linewidth(2)
 ax.set_xticks([])
 ax.set_yticks([])
+
+
+plt.text(20.51,85.1,r"$(d)$",fontsize=27)
+
+
 ax.set_xlabel("ijii")
 pos = ax.get_position().get_points()
 cax = fig10.add_axes([
@@ -284,9 +293,9 @@ cax = fig10.add_axes([
 ])
 cbar = fig10.colorbar(vorticity1, cax=cax, orientation='vertical')
 cbar.locator = matplotlib.ticker.FixedLocator([0,grad2.max()])
-cbar.ax.yaxis.set_minor_locator(MultipleLocator(1/2))
+cbar.ax.xaxis.set_minor_locator(MultipleLocator(1/2))
 cbar.update_ticks()
-cbar.ax.yaxis.set_ticks_position('right')
+cbar.ax.xaxis.set_ticks_position('right')
 cbar.ax.set_yticklabels([ r"$0$",r"$0.018$"],fontsize=25)
 #cbar.ax.set_xticklabels([r"$-3 \times 10^{-5}$", r"$0$",r"$3 \times 10^{-5}$"])
 #cbar.ax.set_xticklabels(["-{}".format(fmt(epr_max)),'0',"{}".format(fmt(epr_max))],ha='left')
@@ -398,6 +407,9 @@ ax.spines["right"].set_linewidth(2)
 ax.spines["top"].set_linewidth(2)
 ax.set_xticks([])
 ax.set_yticks([])
+
+plt.text(38.51,69.1,r"$(e)$",fontsize=27)
+
 ax.set_xlabel("ijii")
 pos = ax.get_position().get_points()
 cax = fig11.add_axes([
