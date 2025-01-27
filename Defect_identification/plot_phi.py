@@ -196,7 +196,7 @@ s11,s12,grad,rho,v,vx,vy,fx,fy,GK,HK=energy_spectrum(nx,ny,a,b)
 #print(s11.shape)
 r=np.sqrt(s11**2 + s12**2)
 
-lattice_angle= fns.smoothening(s12,s11,64,dx,4) #interchange
+lattice_angle= fns.smoothening(s12,s11,64,dx,2) #interchange
 w=lattice_angle
 
 
@@ -242,8 +242,15 @@ ax2.set_yticks([])
 #ax2.set_title(r"$+\frac{1}{2}$",fontsize=15)
 ax2.set_xlim(18,32)   #1
 ax2.set_ylim(66,81)
+#ax2.plot(26.0,73.89,'o',mfc='c',mec='black',markersize=9,mew=1.5)
+ax2.plot(25.48,73.57,'o',mfc='c',mec='black',markersize=10,mew=1.5)
+
 
 ax2.annotate("1", (19, 79), color='black', weight='bold', fontsize=22, ha='left', va='center')
+props = dict(boxstyle='square', facecolor='white', alpha=1.)
+ax2.text(0.05, 0.95, r"$1$", transform=ax2.transAxes, fontsize=14,
+        verticalalignment='top', bbox=props)
+
 
 ax3 = fig2.add_subplot(222)
 epr=ax3.pcolor(grad,cmap='rainbow',vmin=0,vmax=epr_max)
@@ -259,7 +266,12 @@ ax3.set_yticks([])
 ax3.set_xlim(39,54) #2
 ax3.set_ylim(69,84)
 
+ax3.plot(48.05,76.53,'^',mfc='r',mec='black',markersize=10,mew=1.5)
+
 ax3.annotate("2", (40, 82), color='black', weight='bold', fontsize=22, ha='left', va='center')
+props = dict(boxstyle='square', facecolor='white', alpha=1.)
+ax3.text(0.05, 0.95, r"$2$", transform=ax3.transAxes, fontsize=14,
+        verticalalignment='top', bbox=props)
 
 
 
@@ -275,8 +287,14 @@ ax4.set_xticks([])
 ax4.set_yticks([])
 ax4.set_xlim(82,97)#3
 ax4.set_ylim(78,93)
+#ax4.plot(88.91,83.67,'o',mfc='c',mec='black',markersize=9,mew=1.5)
+ax4.plot(89.1,85.63,'o',mfc='c',mec='black',markersize=10,mew=1.5)
 
 ax4.annotate("3", (83, 91), color='black', weight='bold', fontsize=22, ha='left', va='center')
+props = dict(boxstyle='square', facecolor='white', alpha=1.)
+ax4.text(0.05, 0.95, r"$3$", transform=ax4.transAxes, fontsize=14,
+        verticalalignment='top', bbox=props)
+
 ax4.set_xlabel(r"$+\frac{1}{2}$ $defect$",fontsize=25)
 
 ax5 = fig2.add_subplot(224)
@@ -292,31 +310,38 @@ ax5.set_yticks([])
 ax5.set_xlim(72,87) #4
 ax5.set_ylim(5,20)
 
+ax5.plot(76.72,10.91,'^',mfc='red',mec='black',markersize=10,mew=1.5)
+
 ax5.annotate("4", (73, 18), color='black', weight='bold', fontsize=22, ha='left', va='center')
+props = dict(boxstyle='square', facecolor='white', alpha=1.)
+ax5.text(0.05, 0.95, r"$4$", transform=ax5.transAxes, fontsize=14,
+        verticalalignment='top', bbox=props)
 
 ax5.set_xlabel(r"$-\frac{1}{2}$ $defect$",fontsize=25)
-pos = ax2.get_position().get_points()
-pos1 = ax3.get_position().get_points()
+pos = ax3.get_position().get_points()
+pos1 = ax5.get_position().get_points()
 cax = fig2.add_axes([
-    pos[0,0], pos[1,1]+0.02, pos1[1,0]-pos[0,0], 0.025
+   pos[1,1]+0.01, pos1[0,1], 0.025,pos[1,1]-pos1[0,1] 
 ])
-cbar = fig2.colorbar(epr, cax=cax, orientation='horizontal')
+#pos[0,0], pos[1,1]+0.02, pos1[1,0]-pos[0,0], 0.025
+cbar = fig2.colorbar(epr, cax=cax, orientation='vertical')
 cbar.locator = matplotlib.ticker.FixedLocator([0,epr_max/4,epr_max/2,3*epr_max/4,epr_max])
-cbar.ax.xaxis.set_minor_locator(MultipleLocator(1/2))
+cbar.ax.yaxis.set_minor_locator(MultipleLocator(1/2))
 cbar.update_ticks()
 cbar.ax.xaxis.set_ticks_position('top')
-cbar.ax.set_xticklabels([r"$0$",r"$0.2$",r"$0.4$",r"$0.6$",r"$0.8$"],fontsize=22)
+cbar.ax.set_yticklabels([r"$0$",r"$0.2$",r"$0.4$",r"$0.6$",r"$0.8$"],fontsize=22)
 #cbar.ax.set_xticklabels([r"$-3 \times 10^{-5}$", r"$0$",r"$3 \times 10^{-5}$"])
 #cbar.ax.set_xticklabels(["-{}".format(fmt(epr_max)),'0',"{}".format(fmt(epr_max))],ha='left')
-cbar.ax.set_ylabel(r"${\nabla \phi}$",fontsize=30, rotation=360)
-cbar.ax.yaxis.set_label_coords(-0.08,-1.5)
+cbar.ax.set_xlabel(r"${\nabla \phi}$",fontsize=30, rotation=360)
+cbar.ax.xaxis.set_label_coords(-0.08,1.12)
 
 plt.subplots_adjust(wspace=0.051, hspace=0.051)
+ax2.text(-0.35, 1.19, r"$(b)$", transform=ax2.transAxes, fontsize=30,
+        verticalalignment='top')
 
+plt.savefig('def_gradphi.png',bbox_inches='tight',dpi=500)
 
-plt.savefig('def_gradphi.png',dpi=500)
-
-
+#bbox_inches='tight'
 ###########################################################################
 	
 
@@ -341,21 +366,31 @@ ax.spines["right"].set_linewidth(2)
 ax.spines["top"].set_linewidth(2)
 ax.set_xticks([])
 ax.set_yticks([])
+ax.set_xlabel(r"$-\frac{1}{2}$ $defect$",fontsize=25,)
+ax.xaxis.label.set_color('white')
 
 pos = ax.get_position().get_points()
 cax = fig3.add_axes([
-    pos[0,0], pos[1,1]+0.01, pos[1,0]-pos[0,0], 0.025
-])
-cbar = fig3.colorbar(vorticity, cax=cax, orientation='horizontal')
+    pos[0,1]+.81, pos[0,1], 0.025,pos[1,1]-pos[0,1]
+])#([ pos[0,0], pos[1,1]+0.01, pos[1,0]-pos[0,0], 0.025])
+#([pos[0,1]+.41, pos[0,1],  0.025,pos[1,1]-pos[0,1]])
+cbar = fig3.colorbar(vorticity, cax=cax, orientation='vertical')
 cbar.locator = matplotlib.ticker.FixedLocator([-1,0,1])
-cbar.ax.xaxis.set_minor_locator(MultipleLocator(1/2))
+cbar.ax.yaxis.set_minor_locator(MultipleLocator(1/2))
 cbar.update_ticks()
 cbar.ax.xaxis.set_ticks_position('top')
-cbar.ax.set_xticklabels([r"$-1$",r"$0$",r"$1$"],fontsize=22)
+cbar.ax.set_yticklabels([r"$-1$",r"$0$",r"$1$"],fontsize=22)
 #cbar.ax.set_xticklabels([r"$-3 \times 10^{-5}$", r"$0$",r"$3 \times 10^{-5}$"])
 #cbar.ax.set_xticklabels(["-{}".format(fmt(epr_max)),'0',"{}".format(fmt(epr_max))],ha='left')
-cbar.ax.set_ylabel(r"${\phi}$",fontsize=30, rotation=360)
-cbar.ax.yaxis.set_label_coords(-0.08,-1.5)
+cbar.ax.set_xlabel(r"${\phi}$",fontsize=32, rotation=360)
+cbar.ax.xaxis.set_label_coords(0.09,1.13)
+
+ax.plot(25.48,73.57,'o',mfc='c',mec='black',markersize=10,mew=1.5)
+ax.plot(48.05,76.53,'^',mfc='r',mec='black',markersize=10,mew=1.5)
+ax.plot(89.1,85.63,'o',mfc='c',mec='black',markersize=10,mew=1.5)
+ax.plot(76.72,10.91,'^',mfc='red',mec='black',markersize=10,mew=1.5)
+
+
 
 ax.add_patch(Rectangle((39, 69), 15, 15,edgecolor='black',
                     facecolor='none',
@@ -383,8 +418,10 @@ ax.add_patch(Rectangle((72, 5), 15, 15,edgecolor='black',
                     lw=2.5))
 ax.annotate("4", (72, 25), color='black', weight='bold', fontsize=25, ha='left', va='center')
 
-
-plt.savefig('phi.png',dpi=500)
+#props = dict(boxstyle='square', facecolor='white', alpha=1.)
+ax.text(-0.11, 1.09, r"$(a)$", transform=ax.transAxes, fontsize=30,
+        verticalalignment='top')
+plt.savefig('phi.png',bbox_inches='tight',dpi=500)
 
 	
 
@@ -392,7 +429,7 @@ plt.savefig('phi.png',dpi=500)
 
 ##################################################################################3
 
-fig4 = plt.figure(4,figsize=(5,5))
+fig4 = plt.figure(4,figsize=(5.5,5))
 ax2 = fig4.add_subplot(221)
 epr=ax2.pcolor(grad,cmap='rainbow',norm=colors.LogNorm(vmin=1e-3,vmax=epr_max))
 plt.quiver(X,Y,np.cos(w),np.sin(w),scale=14., color='black',
@@ -538,7 +575,15 @@ ax2.set_yticks([])
 ax2.set_xlim(18,32)   #1
 ax2.set_ylim(66,81)
 
+ax2.plot(25.48,73.57,'o',mfc='c',mec='black',markersize=10,mew=1.5)
+
+
 ax2.annotate("1", (19, 79), color='black', weight='bold', fontsize=22, ha='left', va='center')
+ax5.annotate("4", (73, 18), color='black', weight='bold', fontsize=22, ha='left', va='center')
+props = dict(boxstyle='square', facecolor='white', alpha=1.)
+ax2.text(0.05, 0.95, r"$1$", transform=ax2.transAxes, fontsize=14,
+        verticalalignment='top', bbox=props)
+
 
 ax3 = fig6.add_subplot(222)
 epr=ax3.pcolor(grad,cmap='bwr',vmin=-epr_max,vmax=epr_max)
@@ -554,8 +599,13 @@ ax3.set_yticks([])
 ax3.set_xlim(39,54) #2
 ax3.set_ylim(69,84)
 
-ax3.annotate("2", (40, 82), color='black', weight='bold', fontsize=22, ha='left', va='center')
+ax3.plot(48.05,76.53,'^',mfc='r',mec='black',markersize=10,mew=1.5)
 
+ax3.annotate("2", (40, 82), color='black', weight='bold', fontsize=22, ha='left', va='center')
+ax5.annotate("4", (73, 18), color='black', weight='bold', fontsize=22, ha='left', va='center')
+props = dict(boxstyle='square', facecolor='white', alpha=1.)
+ax3.text(0.05, 0.95, r"$2$", transform=ax3.transAxes, fontsize=14,
+        verticalalignment='top', bbox=props)
 
 
 ax4 = fig6.add_subplot(223)
@@ -571,7 +621,16 @@ ax4.set_yticks([])
 ax4.set_xlim(82,97)#3
 ax4.set_ylim(78,93)
 
+
+ax4.plot(89.1,85.63,'o',mfc='c',mec='black',markersize=10,mew=1.5)
+
+
 ax4.annotate("3", (83, 91), color='black', weight='bold', fontsize=22, ha='left', va='center')
+ax5.annotate("4", (73, 18), color='black', weight='bold', fontsize=22, ha='left', va='center')
+props = dict(boxstyle='square', facecolor='white', alpha=1.)
+ax4.text(0.05, 0.95, r"$3$", transform=ax4.transAxes, fontsize=14,
+        verticalalignment='top', bbox=props)
+
 ax4.set_xlabel(r"$+\frac{1}{2}$ $defect$",fontsize=25)
 
 ax5 = fig6.add_subplot(224)
@@ -587,28 +646,38 @@ ax5.set_yticks([])
 ax5.set_xlim(72,87) #4
 ax5.set_ylim(5,20)
 
+ax5.plot(76.72,10.91,'^',mfc='red',mec='black',markersize=10,mew=1.5)
+
 ax5.annotate("4", (73, 18), color='black', weight='bold', fontsize=22, ha='left', va='center')
+ax5.annotate("4", (73, 18), color='black', weight='bold', fontsize=22, ha='left', va='center')
+props = dict(boxstyle='square', facecolor='white', alpha=1.)
+ax5.text(0.05, 0.95, r"$4$", transform=ax5.transAxes, fontsize=14,
+        verticalalignment='top', bbox=props)
 
 ax5.set_xlabel(r"$-\frac{1}{2}$ $defect$",fontsize=25)
-pos = ax2.get_position().get_points()
-pos1 = ax3.get_position().get_points()
+pos = ax3.get_position().get_points()
+pos1 = ax5.get_position().get_points()
 cax = fig6.add_axes([
-    pos[0,0], pos[1,1]+0.02, pos1[1,0]-pos[0,0], 0.025
+     pos[0,1]+.39, pos1[0,1], 0.025,pos[1,1]-pos1[0,1] 
 ])
-cbar = fig6.colorbar(epr, cax=cax, orientation='horizontal')
+#pos[0,0], pos[1,1]+0.02, pos1[1,0]-pos[0,0], 0.025
+cbar = fig6.colorbar(epr, cax=cax, orientation='vertical')
 cbar.locator = matplotlib.ticker.FixedLocator([-epr_max,-epr_max/2,0,epr_max/2,epr_max])
-cbar.ax.xaxis.set_minor_locator(MultipleLocator(1/2))
+cbar.ax.yaxis.set_minor_locator(MultipleLocator(1/2))
 cbar.update_ticks()
 cbar.ax.xaxis.set_ticks_position('top')
-cbar.ax.set_xticklabels([r"$-0.25$",r"$-0.125$",r"$0$",r"$0.125$",r"$0.25$"],fontsize=22)
+cbar.ax.set_yticklabels([r"$-0.25$",r"$-0.125$",r"$0$",r"$0.125$",r"$0.25$"],fontsize=22)
 #cbar.ax.set_xticklabels([r"$-3 \times 10^{-5}$", r"$0$",r"$3 \times 10^{-5}$"])
 #cbar.ax.set_xticklabels(["-{}".format(fmt(epr_max)),'0',"{}".format(fmt(epr_max))],ha='left')
-cbar.ax.set_ylabel(r"${H}$",fontsize=30, rotation=360)
-cbar.ax.yaxis.set_label_coords(-0.08,-1.5)
+cbar.ax.set_xlabel(r"${H}$",fontsize=30, rotation=360)
+cbar.ax.xaxis.set_label_coords(-0.08,1.13)
 
 plt.subplots_adjust(wspace=0.051, hspace=0.051)
+ax2.text(-0.2, 1.19, r"$(c)$", transform=ax2.transAxes, fontsize=30,
+        verticalalignment='top')
 
-plt.savefig('def_mean_curv.png',dpi=500)
+
+plt.savefig('def_mean_curv.png',bbox_inches='tight',dpi=500)
 
 
 

@@ -210,11 +210,16 @@ fig1 = plt.figure(1,figsize=(5,5))
 ax1 = fig1.add_subplot(111)
 epr=ax1.pcolor(grad,cmap='gnuplot2_r',vmin=0,vmax=epr_max)#afmhot_r
 
-epr1=ax1.contour(a,[-0.8,0,0.8],colors='black',alpha = .7)
+epr1=ax1.contour(a,[-0.8,0,0.8],colors='black',alpha = 1.)
 
-ax1.scatter(31.8,68.8,s=3300,fc="None",ec="red",linewidth=2)
+ax1.scatter(31.8,68.8,s=3200,fc="None",ec="red",linewidth=2.5,linestyle='solid')
 
-ax1.scatter(52.8,49.8,s=3200,fc="None",ec="green",linewidth=2)
+ax1.scatter(52.8,49.8,s=3100,fc="None",ec="green",linewidth=2.5)
+
+ax1.scatter(60.8,20.,s=3100,fc="None",ec="brown",linewidth=2.5)
+
+
+ax1.scatter(16.7,116.37,s=2800,fc="None",ec="k",linewidth=2.5)
 
 ax1.spines["bottom"].set_linewidth(2)
 ax1.spines["left"].set_linewidth(2)
@@ -223,25 +228,45 @@ ax1.spines["top"].set_linewidth(2)
 ax1.set_xticks([])
 ax1.set_yticks([])
 
-plt.text(-19.51,140.1,r"$(a)$",fontsize=27)
+ax1.plot(26,74.,'o',mfc='c',mec='black',markersize=10,mew=1.5)
+ax1.plot(37.3,64.5,'o',mfc='c',mec='black',markersize=10,mew=1.5)
+
+ax1.plot(52.16,45.17,'o',mfc='c',mec='black',markersize=10,mew=1.5)
+
+ax1.plot(51.5,59.6,'^',mfc='r',mec='black',markersize=10,mew=1.5)
+
+ax1.plot(61.89,20.89,'o',mfc='c',mec='black',markersize=10,mew=1.5)
+
+ax1.plot(16.7,118.37,'^',mfc='r',mec='black',markersize=10,mew=1.5)
+#ax.annotate('',xy=(30.5,78),xytext=(26,74),color='r',arrowprops=dict(width=2.5,facecolor='r',edgecolor='r', shrink=0.05),zorder=1e3)
+
+#ax.annotate('',xy=(33.5,61.2),xytext=(37.3,64.5),color='r',arrowprops=dict(width=2.5,facecolor='r',edgecolor='r', shrink=0.05),zorder=1e3)
+
+#ax.annotate('',xy=(52.55,40.17),xytext=(52.16,45.0),color='r',arrowprops=dict(width=2.5,facecolor='r',edgecolor='r', shrink=0.05),zorder=1e3)
+
+xp=[52.16,51.5]
+yp=[45.17,59.69]
+
+
+plt.text(-18.50,140.1,r"$(a)$",fontsize=27)
 
 eppr=grad.sum()
-ax1.text(-5.5e-1, -9.95, r'$\int \sigma d {\bf r}=%.2g$' %eppr, size=2.5*1e1)
+ax1.text(-5.5e-1, -9.95, r'$\int \tilde{\sigma} d {\bf r}=%.2g$' %eppr, size=2.5*1e1)
 #ax1.text(791.5e-1, -8.95, r'$ \sigma = \psi \nabla ^{4} \psi$', size=2.5*1e1) #( \nabla ^{2} \psi)^{2}
 pos = ax1.get_position().get_points()
 cax = fig1.add_axes([
-    pos[0,0], pos[1,1]+0.01, pos[1,0]-pos[0,0], 0.025
+     pos[1,1]+0.04, pos[0,1], 0.025,pos[1,1]-pos[0,1] 
 ])
-cbar = fig1.colorbar(epr, cax=cax, orientation='horizontal')
+cbar = fig1.colorbar(epr, cax=cax, orientation='vertical')
 cbar.locator = matplotlib.ticker.FixedLocator([0,epr_max])
-cbar.ax.xaxis.set_minor_locator(MultipleLocator(epr_max/2))
+cbar.ax.yaxis.set_minor_locator(MultipleLocator(epr_max/2))
 cbar.update_ticks()
 cbar.ax.xaxis.set_ticks_position('top')
 #cbar.ax.set_xticklabels(['-1e-7','0','1e-7'])
-cbar.ax.set_xticklabels([ r"$0$",r"$0.0219$"],fontsize=17.5)
+cbar.ax.set_yticklabels([ r"$0$",r"$0.022$"],fontsize=17.5)
 #cbar.ax.set_xticklabels(["-{}".format(fmt(epr_max)),'0',"{}".format(fmt(epr_max))],ha='left')
-cbar.ax.set_ylabel(r"${\sigma }$",fontsize=30, rotation=360)
-cbar.ax.yaxis.set_label_coords(-0.08,-1.5)
+cbar.ax.set_xlabel(r"${\tilde{\sigma} }(\mathbf{r})$",fontsize=30, rotation=360)
+cbar.ax.xaxis.set_label_coords(-0.08,1.13)
 #ax1.add_patch(Rectangle((20, 75), 25, 25,edgecolor='black',
 #                    facecolor='none',
 #                    lw=1.5))
@@ -251,7 +276,7 @@ cbar.ax.yaxis.set_label_coords(-0.08,-1.5)
 ax1.set_aspect('equal')
 
 
-plt.savefig('epr_form1.png',dpi=500)
+plt.savefig('epr_form1.png',bbox_inches='tight',dpi=500)
 ###########################################################################
 
 
@@ -271,7 +296,7 @@ circle = matplotlib.path.Path(verts * radius + center)
 
 #patch = mpatches.PathPatch(path, facecolor='none', edgecolor='k')
 
-vorticity1=ax.pcolor(grad1,cmap='gnuplot2_r',vmin=0,vmax=grad2.max(),clip_path=(circle, ax.transAxes))
+vorticity1=ax.pcolor(grad1,cmap='viridis',vmin=0,vmax=0.022,clip_path=(circle, ax.transAxes))
 plt.quiver(X,Y,np.cos(w),np.sin(w),scale=20., color='black',
         width=0.005, headwidth=0.8, headlength=0.8,clip_path=(circle, ax.transAxes))
 #plt.streamplot(X,Y,-vy,-vx, color='white',arrowsize=1,arrowstyle='-|>',density=1)
@@ -282,29 +307,34 @@ ax.spines["top"].set_linewidth(2)
 ax.set_xticks([])
 ax.set_yticks([])
 
+from matplotlib.patches import Circle
+plt.text(20.51,85.1,r"$(d)$",fontsize=35)
 
-plt.text(20.51,85.1,r"$(d)$",fontsize=27)
+plt.text(25.51,50.1,r"$Simulation$",fontsize=35)
+
+circle=Circle((33,70),14.8,color='r',fill=False,linewidth=3,linestyle='solid')
+ax.add_patch(circle)
 
 
 ax.set_xlabel("ijii")
-pos = ax.get_position().get_points()
-cax = fig10.add_axes([
-    pos[1,0]+0.03, pos[0,0], 0.03,pos[1,1]-pos[0,1]
-])
-cbar = fig10.colorbar(vorticity1, cax=cax, orientation='vertical')
-cbar.locator = matplotlib.ticker.FixedLocator([0,grad2.max()])
-cbar.ax.xaxis.set_minor_locator(MultipleLocator(1/2))
-cbar.update_ticks()
-cbar.ax.xaxis.set_ticks_position('right')
-cbar.ax.set_yticklabels([ r"$0$",r"$0.018$"],fontsize=25)
-#cbar.ax.set_xticklabels([r"$-3 \times 10^{-5}$", r"$0$",r"$3 \times 10^{-5}$"])
-#cbar.ax.set_xticklabels(["-{}".format(fmt(epr_max)),'0',"{}".format(fmt(epr_max))],ha='left')
-cbar.ax.set_xlabel(r"${\sigma}$",fontsize=35, rotation=360) #(\mathbf{r})
-cbar.ax.xaxis.set_label_coords(-0.08,1.13)
+# pos = ax.get_position().get_points()
+# cax = fig10.add_axes([
+#     pos[1,0]+0.03, pos[0,0], 0.03,pos[1,1]-pos[0,1]
+# ])
+# cbar = fig10.colorbar(vorticity1, cax=cax, orientation='vertical')
+# cbar.locator = matplotlib.ticker.FixedLocator([0,0.001,0.022])
+# cbar.ax.yaxis.set_minor_locator(MultipleLocator(1/2))
+# cbar.update_ticks()
+# cbar.ax.yaxis.set_ticks_position('right')
+# cbar.ax.set_yticklabels([ r"$0$","0.001",r"$0.018$"],fontsize=25)
+# #cbar.ax.set_xticklabels([r"$-3 \times 10^{-5}$", r"$0$",r"$3 \times 10^{-5}$"])
+# #cbar.ax.set_xticklabels(["-{}".format(fmt(epr_max)),'0',"{}".format(fmt(epr_max))],ha='left')
+# cbar.ax.set_xlabel(r"${\sigma}$",fontsize=35, rotation=360) #(\mathbf{r})
+# cbar.ax.xaxis.set_label_coords(-0.08,1.13)
 
-ax.annotate('',xy=(30.5,78),xytext=(26,74),color='r',arrowprops=dict(width=2.5,facecolor='r',edgecolor='r', shrink=0.05),zorder=1e3)
+ax.annotate('',xy=(30.5,78),xytext=(26,74),color='c',arrowprops=dict(width=2.5,facecolor='c',edgecolor='c', shrink=0.05),zorder=1e3)
 
-ax.annotate('',xy=(33.5,61.2),xytext=(37.3,64.5),color='r',arrowprops=dict(width=2.5,facecolor='r',edgecolor='r', shrink=0.05),zorder=1e3)
+ax.annotate('',xy=(33.5,61.2),xytext=(37.3,64.5),color='c',arrowprops=dict(width=2.5,facecolor='c',edgecolor='c', shrink=0.05),zorder=1e3)
 
 #ax.annotate('',xy=(45.5,80.2),xytext=(31.3,69.1),color='r',arrowprops=dict(width=2.5,facecolor='g',edgecolor='g', shrink=0.05),zorder=1e3)
 
@@ -314,16 +344,19 @@ yp=[74,64.5]
 ax.plot(xp,yp,'--',c='c',linewidth=2.5,zorder=1e3)
 ax.scatter(xp,yp,c='r',s=40)
 
+ax.plot(26,74,'o',mfc='c',mec='black',markersize=12,mew=2.)
+ax.plot(37.3,64.5,'o',mfc='c',mec='black',markersize=12,mew=2.)
+
 d=np.sqrt((xp[0]-xp[1])**2+(yp[0]-yp[1])**2)
 print("d=",d)
 
 xp1=[31.5,43]
 yp1=[69.3,80.5]
-ax.plot(xp1,yp1,linestyle='dashed',c='brown',linewidth=2.5,zorder=1e3)
-ax.scatter(xp1,yp1,c='brown',s=40)
+ax.plot(xp1,yp1,linestyle='dashed',c='r',linewidth=2.5,zorder=1e3)
+ax.scatter(xp1,yp1,c='r',s=40)
 
 
-ax.set_xlim(19,47)#(112,127)#3  
+ax.set_xlim(18,48)#(112,127)#3  
 ax.set_ylim(55,85)#(85,100)
 ax.axis('off')
 
@@ -387,7 +420,7 @@ fig11 = plt.figure(11,figsize=(5,5))
 
 
 grad1=grad#[70:90,14:28]
-grad2=grad[35:68,38:66]
+grad2=grad[35:67,35:67]
 ax = fig11.add_subplot(111)
 theta = np.linspace(0, 2*np.pi, 400)
 center, radius = [0.5, 0.5], 0.5
@@ -395,7 +428,7 @@ verts = np.vstack([np.sin(theta), np.cos(theta)]).T
 circle = matplotlib.path.Path(verts * radius + center)
 
 
-vorticity1=ax.pcolor(grad1,cmap='gnuplot2_r',vmin=0,vmax=grad2.max(),clip_path=(circle, ax.transAxes))
+vorticity1=ax.pcolor(grad1,cmap='viridis',vmin=0,vmax=0.005,clip_path=(circle, ax.transAxes))
 plt.quiver(X,Y,np.cos(w),np.sin(w),scale=25., color='black',
         width=0.005, headwidth=0.8, headlength=0.8,clip_path=(circle, ax.transAxes))
 
@@ -408,25 +441,32 @@ ax.spines["top"].set_linewidth(2)
 ax.set_xticks([])
 ax.set_yticks([])
 
-plt.text(38.51,69.1,r"$(e)$",fontsize=27)
+plt.text(38.51,69.1,r"$(e)$",fontsize=35)
+
+plt.text(43.51,29.5,r"$Simulation$",fontsize=35)
+
+circle=Circle((51.,51.),15.8,color='g',fill=False,linewidth=3,linestyle='solid')
+ax.add_patch(circle)
+
+print(grad2.max())
 
 ax.set_xlabel("ijii")
-pos = ax.get_position().get_points()
-cax = fig11.add_axes([
-    pos[1,0]+0.03, pos[0,0], 0.03,pos[1,1]-pos[0,1]
-])
-cbar = fig11.colorbar(vorticity1, cax=cax, orientation='vertical')
-cbar.locator = matplotlib.ticker.FixedLocator([0,grad2.max()])
-cbar.ax.yaxis.set_minor_locator(MultipleLocator(1/2))
-cbar.update_ticks()
-cbar.ax.yaxis.set_ticks_position('right')
-cbar.ax.set_yticklabels([ r"$0$",r"$0.005$"],fontsize=25)
-#cbar.ax.set_xticklabels([r"$-3 \times 10^{-5}$", r"$0$",r"$3 \times 10^{-5}$"])
-#cbar.ax.set_xticklabels(["-{}".format(fmt(epr_max)),'0',"{}".format(fmt(epr_max))],ha='left')
-cbar.ax.set_xlabel(r"${\sigma}$",fontsize=35, rotation=360) #(\mathbf{r})
-cbar.ax.xaxis.set_label_coords(-0.08,1.13)
+# pos = ax.get_position().get_points()
+# cax = fig11.add_axes([
+#     pos[1,0]+0.03, pos[0,0], 0.03,pos[1,1]-pos[0,1]
+# ])
+# cbar = fig11.colorbar(vorticity1, cax=cax, orientation='vertical')
+# cbar.locator = matplotlib.ticker.FixedLocator([0,grad2.max()])
+# cbar.ax.yaxis.set_minor_locator(MultipleLocator(1/2))
+# cbar.update_ticks()
+# cbar.ax.yaxis.set_ticks_position('right')
+# cbar.ax.set_yticklabels([ r"$0$",r"$0.005$"],fontsize=25)
+# #cbar.ax.set_xticklabels([r"$-3 \times 10^{-5}$", r"$0$",r"$3 \times 10^{-5}$"])
+# #cbar.ax.set_xticklabels(["-{}".format(fmt(epr_max)),'0',"{}".format(fmt(epr_max))],ha='left')
+# cbar.ax.set_xlabel(r"${\sigma}$",fontsize=35, rotation=360) #(\mathbf{r})
+# cbar.ax.xaxis.set_label_coords(-0.08,1.13)
 
-ax.annotate('',xy=(52.55,40.17),xytext=(52.16,45.0),color='r',arrowprops=dict(width=2.5,facecolor='r',edgecolor='r', shrink=0.05),zorder=1e3)
+ax.annotate('',xy=(52.55,40.17),xytext=(52.16,45.0),color='c',arrowprops=dict(width=2.5,facecolor='c',edgecolor='c', shrink=0.05),zorder=1e3)
 
 ax.annotate('',xy=(33.5,61.2),xytext=(37.3,64.5),color='r',arrowprops=dict(width=2.5,facecolor='r',edgecolor='r', shrink=0.05),zorder=1e3)
 
@@ -436,6 +476,10 @@ xp=[52.16,51.5]
 yp=[45.17,59.69]
 ax.plot(xp,yp,'--',c='c',linewidth=2.5,zorder=1e3)
 ax.scatter(xp,yp,c='r',s=40)
+
+ax.plot(52.16,45.17,'o',mfc='c',mec='black',markersize=12,mew=2.)
+
+ax.plot(51.5,59.69,'^',mfc='r',mec='black',markersize=12,mew=2.)
 
 
 xc=[49.18,51.5]
@@ -454,11 +498,11 @@ ax.plot(xc2,yc2,c='r',linewidth=2.5,zorder=1e3)
 
 xp1=[51.81,64.096]
 yp1=[51.71,59.69]
-ax.plot(xp1,yp1,linestyle='dashed',c='brown',linewidth=2.5,zorder=1e3)
-ax.scatter(xp1,yp1,c='brown',s=40)
+ax.plot(xp1,yp1,linestyle='dashed',c='r',linewidth=2.5,zorder=1e3)
+ax.scatter(xp1,yp1,c='r',s=40)
 
-ax.set_xlim(38,66)#(112,127)#3  
-ax.set_ylim(35,68)#(85,100)
+ax.set_xlim(35,67)#(112,127)#3  
+ax.set_ylim(35,67)#(85,100)
 ax.axis('off')
 
 d=np.sqrt((xp[0]-xp[1])**2+(yp[0]-yp[1])**2)

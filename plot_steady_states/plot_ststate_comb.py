@@ -132,6 +132,10 @@ ax.set_xticks([])
 ax.set_yticks([])
 density = ax.pcolor(phi_lam, cmap='RdBu',vmin=-phi_max,vmax=phi_max)
 
+props = dict(boxstyle='square', facecolor='white', alpha=1.)
+ax.text(0.05, 0.95, r"$(a)$", transform=ax.transAxes, fontsize=12,
+        verticalalignment='top', bbox=props)
+
 
 #plot 2
 dum     = abs(phi_vor.flatten())
@@ -143,6 +147,9 @@ axb.set_xticks([])
 axb.set_yticks([])
 density = axb.pcolor(phi_vor, cmap='RdBu',vmin=-phi_max,vmax=phi_max)
 
+props = dict(boxstyle='square', facecolor='white', alpha=1.)
+axb.text(0.05, 0.95, r"$(b)$", transform=axb.transAxes, fontsize=12,
+        verticalalignment='top', bbox=props)
 
 #plot 3
 dum     = abs(phi_turb.flatten())
@@ -160,10 +167,14 @@ cbar = colorbar(density, cax=cbx, orientation='vertical')
 cbar.locator = matplotlib.ticker.FixedLocator([-phi_max/1.0,0,phi_max/1.0])
 cbar.ax.yaxis.set_minor_locator(MultipleLocator(phi_max/2))
 cbar.update_ticks()
-cbar.ax.xaxis.set_ticks_position('bottom')
+cbar.ax.xaxis.set_ticks_position('default')
 cbar.ax.set_yticklabels([r"$-1$",r"$0$",r"$1$"],ha='left',fontsize=15)
-cbar.ax.set_ylabel(r"${\phi}$",fontsize=15, rotation=360)
-cbar.ax.yaxis.set_label_coords(0.25,1.16)
+cbar.ax.set_xlabel(r"${\phi}$",fontsize=25, rotation=360)
+cbar.ax.xaxis.set_label_coords(5.25,.66)
+
+props = dict(boxstyle='square', facecolor='white', alpha=1.)
+axc.text(0.05, 0.95, r"$(c)$", transform=axc.transAxes, fontsize=12,
+        verticalalignment='top', bbox=props)
 
 
 
@@ -220,8 +231,8 @@ cbar.ax.xaxis.set_minor_locator(MultipleLocator(psi_max/2))
 cbar.update_ticks()
 cbar.ax.xaxis.set_ticks_position('bottom')
 cbar.ax.set_yticklabels([r"$-4.7$",r"$0$",r"$4.7$"],ha='left',fontsize=15)
-cbar.ax.set_ylabel(r"$\tilde{\psi}$",fontsize=15, rotation=360)
-cbar.ax.yaxis.set_label_coords(0.25,-.05)
+cbar.ax.set_xlabel(r"$\tilde{\psi} $",fontsize=25, rotation=360)
+cbar.ax.xaxis.set_label_coords(5.25,.65)
 
 
 
