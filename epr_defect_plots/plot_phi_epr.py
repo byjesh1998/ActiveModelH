@@ -297,7 +297,7 @@ circle = matplotlib.path.Path(verts * radius + center)
 #patch = mpatches.PathPatch(path, facecolor='none', edgecolor='k')
 
 vorticity1=ax.pcolor(grad1,cmap='viridis',vmin=0,vmax=0.022,clip_path=(circle, ax.transAxes))
-plt.quiver(X,Y,np.cos(w),np.sin(w),scale=20., color='black',
+plt.quiver(X,Y,np.cos(w),np.sin(w),scale=20., color='white',
         width=0.005, headwidth=0.8, headlength=0.8,clip_path=(circle, ax.transAxes))
 #plt.streamplot(X,Y,-vy,-vx, color='white',arrowsize=1,arrowstyle='-|>',density=1)
 ax.spines["bottom"].set_linewidth(2)
@@ -429,7 +429,7 @@ circle = matplotlib.path.Path(verts * radius + center)
 
 
 vorticity1=ax.pcolor(grad1,cmap='viridis',vmin=0,vmax=0.005,clip_path=(circle, ax.transAxes))
-plt.quiver(X,Y,np.cos(w),np.sin(w),scale=25., color='black',
+plt.quiver(X,Y,np.cos(w),np.sin(w),scale=25., color='white',
         width=0.005, headwidth=0.8, headlength=0.8,clip_path=(circle, ax.transAxes))
 
         
