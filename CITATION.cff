@@ -1,10 +1,12 @@
 cff-version: 1.2.0
 message: "If you use this software, please cite it as below."
 authors:
-  - family-names:N. Radhakrishnan
+  - family-names: N. Radhakrishnan
     given-names: Byjesh
-
-title: "Active turbulence"
+    orcid: https://orcid.org/0000-0002-5877-6456 
+title: "Active_Turbulence"
 version: 2.0.4
-url: https://github.com/byjesh1998/Active_Turbulence
-
+identifiers:
+  - type: doi
+    value: 10.5281/zenodo.1234
+date-released: 2025-08-11
