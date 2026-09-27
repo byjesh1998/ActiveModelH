@@ -71,15 +71,6 @@ $$
 \eta\ \nabla^4 \psi = \kappa' \left[\ \partial_x\phi \nabla^2(\partial_y\phi) - \partial_y\phi \nabla^2(\partial_x\phi) \right]
 $$
 
-### Entropy production rate (optional)
-
-When enabled with `-a`, the local EPR density is computed as
-
-$$
-\sigma = \frac{\kappa - \kappa'}{T}\;\psi\left[\,\partial_x\phi\;\nabla^2(\partial_y\phi) - \partial_y\phi\;\nabla^2(\partial_x\phi)\,\right]
-$$
-
-and a running time average of σ is accumulated.
 
 ### Parameters
 
