@@ -27,9 +27,8 @@ $ ./activeH_heun
 
 A C++ solver for a two-dimensional **active Model H**: a conserved scalar order parameter φ (e.g. a concentration or composition field) coupled to an incompressible Stokes flow that is driven by an active stress. The equations are integrated with a pseudo-spectral method on a periodic grid, using **Intel MKL** for FFTs and **Armadillo** for array algebra.
 
-The program can also compute and time-average a spatially resolved **entropy production rate (EPR)** density.
 
-The repository also includes a Python script, `txt_to_matrix_extraction.py`. It collects the snapshot files into a single MATLAB `.mat` file for analysis.
+The repository also includes a Python script, `txt_to_matrix_extraction.py`. It collects the snapshot files into matrix format `.mat` file for analysis. It also include folders with code to make steady state phase diagram as well as movie of the evolution of the system.
 
 ---
 
