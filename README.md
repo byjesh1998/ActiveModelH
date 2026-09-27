@@ -54,7 +54,7 @@ The repository also includes a Python script, `txt_to_matrix_extraction.py`. It 
 The scalar field φ evolves by advection plus a Cahn–Hilliard-type (Model B) relaxation:
 
 $$
-\partial_t \phi + \mathbf{v}\cdot\nabla\phi = \nabla^2\left(a\,m\,\phi + b\,\phi^3\right) - \kappa\,\nabla^4\phi
+\partial_t \phi + \mathbf{v}\cdot\nabla\phi = M\nabla^2\left(a \phi + b\phi^3 \right) - \kappa \nabla^4 \phi
 $$
 
 ### Flow field
@@ -68,7 +68,7 @@ $$
 The stream function solves a biharmonic (Stokes) equation whose source is the active stress, with strength κ':
 
 $$
-\eta\,\nabla^4 \psi = \kappa' \left[\,\partial_x\phi\;\nabla^2(\partial_y\phi) \;-\; \partial_y\phi\;\nabla^2(\partial_x\phi)\,\right]
+\eta\ \nabla^4 \psi = \kappa' \left[\ \partial_x\phi \nabla^2(\partial_y\phi) - \partial_y\phi \nabla^2(\partial_x\phi) \right]
 $$
 
 ### Entropy production rate (optional)
