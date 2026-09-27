@@ -51,8 +51,9 @@ void sigint_handler(int sig) {
 typedef boost::iostreams::tee_device<ostream, ofstream> TeeDevice;
 typedef boost::iostreams::stream<TeeDevice> TeeStream;
  
-  //////////////////////
- /* Solver properties*/
+
+//////////////////////
+/* Solver properties*/
 //////////////////////
 int steps;
 int print_interval;
@@ -63,7 +64,6 @@ double Ly;
 double dt;
 
 // Parameters                   
-double Diff;
 double l;                        //lambda
 double k;                        //kappa
 double k1;                       //kappa'
@@ -77,8 +77,7 @@ double zeta;                     //zeta
 // Initial conditions             
 double phi0;
 double psi0;
-double vx0;
-double vy0;
+
 
 int main(int argc, const char **argv) {
     clock_t start;
@@ -89,22 +88,22 @@ int main(int argc, const char **argv) {
     double sqrt_2etatem;
     double sqrt_2mtem;
     //double epr_av = 0;
-    double phi_av =0;
+    // double phi_av =0;
     int average_shift = 0;
     bool continue_average = false;
-    bool average_epr = false;
+    // bool average_epr = false;
     bool verbose = false;
     bool no_noise_phi = false;
     bool no_noise_psi = false;
     bool axy = false;
     string input_dir;
     char option;
-    ofstream vx_file;
-    ofstream vy_file;
-    ofstream v_file;
-    ofstream epr_file;
-    ofstream epr_av_file;
-    ofstream phi_av_file;
+    // ofstream vx_file;
+    // ofstream vy_file;
+    // ofstream v_file;
+    // ofstream epr_file;
+    // ofstream epr_av_file;
+    // ofstream phi_av_file;
     ofstream log_file;
     ios_base::openmode epr_av_t = ios::trunc;
     ios_base::openmode phi_av_t = ios::trunc;
@@ -114,9 +113,9 @@ int main(int argc, const char **argv) {
     // Real space fields           
     mat phi;
     mat psi;
-    mat vx;
-    mat vy;
-    mat epr_av;
+    // mat vx;
+    // mat vy;
+    // mat epr_av;
 
     // Set random seed
     arma_rng::set_seed_random();
@@ -168,14 +167,14 @@ int main(int argc, const char **argv) {
             log << "tem: " << tem << endl;
             log << "phi0: " << phi0 << endl;
             log << "psi0: " << psi0 << endl;
-            log << "vx0: " << vx0 << endl;
-            log << "vy0: " << vy0 << endl << endl;
+            // log << "vx0: " << vx0 << endl;
+            // log << "vy0: " << vy0 << endl << endl;
 
             // If input is read successfully, initialize fields and epr  
             phi.ones(Nx,Ny); phi *= phi0;
             psi.ones(Nx,Ny); psi *=psi0;
-            vx.ones(Nx,Ny); vx *= vx0;
-            vy.ones(Nx,Ny); vy *= vy0;
+            // vx.ones(Nx,Ny); vx *= vx0;
+            // vy.ones(Nx,Ny); vy *= vy0;
 
             sqrt_Ddt = sqrt(Diff*dt);
             sqrt_2etatem=sqrt(2*eta*tem);
@@ -282,22 +281,22 @@ int main(int argc, const char **argv) {
 
     /* Initialize output files */   
     // velocity
-    vx_file.open(input_dir + "vx_av.txt", ios::trunc);
-    vy_file.open(input_dir + "vy_av.txt", ios::trunc);
-    v_file.open(input_dir + "v_av.txt", ios::trunc);
+    // vx_file.open(input_dir + "vx_av.txt", ios::trunc);
+    // vy_file.open(input_dir + "vy_av.txt", ios::trunc);
+    // v_file.open(input_dir + "v_av.txt", ios::trunc);
 
     //vx_ft_file.open(input_dir + "vx_ft_av.txt", ios::trunc);
     //vy_ft_file.open(input_dir + "vy_ft_av.txt", ios::trunc);
 
     //phi
-    phi_av_file.open(input_dir + "phi_av.txt", phi_av_t);
+    // phi_av_file.open(input_dir + "phi_av.txt", phi_av_t);
 
     // Set precision of output files
-    vx_file.precision(dbl::max_digits10);
-    vy_file.precision(dbl::max_digits10);
-    v_file.precision(dbl::max_digits10);
+    // vx_file.precision(dbl::max_digits10);
+    // vy_file.precision(dbl::max_digits10);
+    // v_file.precision(dbl::max_digits10);
 
-    phi_av_file.precision(dbl::max_digits10);
+    // phi_av_file.precision(dbl::max_digits10);
 
     // EPR                      
     //if (average_epr) {
@@ -331,23 +330,23 @@ int main(int argc, const char **argv) {
     psi_ft.col(Ny/2).zeros();
     psi_ft.row(Nx/2).zeros();
 
-    cx_mat vx_ft(Nx,Ny/2+1,fill::zeros);
-    fft_forward(vx.memptr(), (MKL_Complex16 *)vx_ft.memptr());
-    vx_ft.col(Ny/2).zeros();
-    vx_ft.row(Nx/2).zeros();
+    // cx_mat vx_ft(Nx,Ny/2+1,fill::zeros);
+    // fft_forward(vx.memptr(), (MKL_Complex16 *)vx_ft.memptr());
+    // vx_ft.col(Ny/2).zeros();
+    // vx_ft.row(Nx/2).zeros();
 
-    cx_mat vy_ft(Nx,Ny/2+1,fill::zeros);
-    fft_forward(vy.memptr(), (MKL_Complex16 *)vy_ft.memptr());
-    vy_ft.col(Ny/2).zeros();
-    vy_ft.row(Nx/2).zeros();
+    // cx_mat vy_ft(Nx,Ny/2+1,fill::zeros);
+    // fft_forward(vy.memptr(), (MKL_Complex16 *)vy_ft.memptr());
+    // vy_ft.col(Ny/2).zeros();
+    // vy_ft.row(Nx/2).zeros();
 
-    // EPR real space
-    mat epr(Nx,Ny,fill::zeros);
-    //mat epr_av(Nx,Ny,fill::zeros);
+    // // EPR real space
+    // mat epr(Nx,Ny,fill::zeros);
+    // //mat epr_av(Nx,Ny,fill::zeros);
 
-    // EPR Fourier space
-    cx_mat epr_ft(Nx,Ny/2+1,fill::zeros);
-    cx_mat epr_av_ft(Nx,Ny/2+1,fill::zeros);
+    // // EPR Fourier space
+    // cx_mat epr_ft(Nx,Ny/2+1,fill::zeros);
+    // cx_mat epr_av_ft(Nx,Ny/2+1,fill::zeros);
 
 
     //predictor phi term in fourier space
@@ -613,14 +612,14 @@ int main(int argc, const char **argv) {
                 // Fourier transform
                 fft_backward((MKL_Complex16 *) phi_ft.memptr(), phi.memptr());
                 fft_backward((MKL_Complex16 *) psi_ft.memptr(), psi.memptr());
-                fft_backward((MKL_Complex16 *) vx_ft.memptr(), vx.memptr());
-                fft_backward((MKL_Complex16 *) vy_ft.memptr(), vy.memptr());
+                // fft_backward((MKL_Complex16 *) vx_ft.memptr(), vx.memptr());
+                // fft_backward((MKL_Complex16 *) vy_ft.memptr(), vy.memptr());
 
                 // Print output
                 phi.save(input_dir + "phi_" + to_string(i+49000000) + ".txt", raw_ascii);
                 psi.save(input_dir + "psi_" + to_string(i+49000000) + ".txt", raw_ascii);
-                vx.save(input_dir + "vx_" + to_string(i+49000000) + ".txt", raw_ascii);
-                vy.save(input_dir + "vy_" + to_string(i+49000000) + ".txt", raw_ascii);
+                // vx.save(input_dir + "vx_" + to_string(i+49000000) + ".txt", raw_ascii);
+                // vy.save(input_dir + "vy_" + to_string(i+49000000) + ".txt", raw_ascii);
 
                 phi_av_file << phi_av << endl;
             }
@@ -656,15 +655,15 @@ int main(int argc, const char **argv) {
     // Fourier transform final config
     fft_backward((MKL_Complex16 *) phi_ft.memptr(), phi.memptr());
     fft_backward((MKL_Complex16 *) psi_ft.memptr(), psi.memptr());
-    fft_backward((MKL_Complex16 *) vx_ft.memptr(), vx.memptr());
-    fft_backward((MKL_Complex16 *) vy_ft.memptr(), vy.memptr());
+    // fft_backward((MKL_Complex16 *) vx_ft.memptr(), vx.memptr());
+    // fft_backward((MKL_Complex16 *) vy_ft.memptr(), vy.memptr());
 
     // Save final state to file
     log << "Printing final state to file ..." << endl;
     phi.save(input_dir + "phi.txt", raw_ascii);
     psi.save(input_dir + "psi.txt", raw_ascii);
-    vx.save(input_dir + "vx.txt", raw_ascii);
-    vy.save(input_dir + "vy.txt", raw_ascii);
+    // vx.save(input_dir + "vx.txt", raw_ascii);
+    // vy.save(input_dir + "vy.txt", raw_ascii);
 
     
 
