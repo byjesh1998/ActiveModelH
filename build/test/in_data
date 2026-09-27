@@ -1,0 +1,29 @@
+## SOLVER PARAMETERS
+steps = 7000
+pinterval = 500
+dt = 1e-4
+
+## SYSTEM PARAMETERS
+Nx = 8
+Ny = 8
+Lx = 8
+Ly = 8
+
+## PARAMETERS
+D = 1
+lambda = 0.1
+m =1
+zeta=0.2
+eta=1.67
+a=-0.004
+b=0.004
+tem=1
+kappa=0.006
+kappa1=-0.001
+
+
+## INITIAL CONDITIONS
+phi0 = 0.1
+psi0 =0
+vx0 = 0
+vy0 = 0

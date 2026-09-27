@@ -1,0 +1,15 @@
+find_path(MKL_ROOT_DIR NAMES include/mkl.h HINTS $ENV{MKLROOT})
+
+if (NOT MKL_ROOT_DIR)
+    if (MKL_FIND_REQUIRED)
+        message(FATAL_ERROR "Could not find MKL: please set environment variable {MKLROOT}")
+    else()
+        unset(MKL_ROOT_DIR CACHE)
+    endif()
+else()
+    set(MKL_INCLUDE_DIR $ENV{MKLROOT}/include)
+    set(MKL_LIBRARY_DIR $ENV{MKLROOT}/lib/intel64)
+
+    include_directories(${MKL_INCLUDE_DIR})
+    link_directories(${MKL_LIBRARY_DIR})
+endif()
