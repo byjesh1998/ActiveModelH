@@ -23,12 +23,13 @@ $ ./activeH_heun
 ```
 
 
-
 # Active Model H: 2D Pseudo-Spectral Solver
 
 A C++ solver for a two-dimensional **active Model H**: a conserved scalar order parameter φ (e.g. a concentration or composition field) coupled to an incompressible Stokes flow that is driven by an active stress. The equations are integrated with a pseudo-spectral method on a periodic grid, using **Intel MKL** for FFTs and **Armadillo** for array algebra.
 
 The program can also compute and time-average a spatially resolved **entropy production rate (EPR)** density.
+
+The repository also includes a Python script, `txt_to_matrix_extraction.py`. It collects the snapshot files into a single MATLAB `.mat` file for analysis.
 
 ---
 
@@ -41,6 +42,7 @@ The program can also compute and time-average a spatially resolved **entropy pro
 - [Usage](#usage)
 - [Input File (`in_data`)](#input-file-in_data)
 - [Output Files](#output-files)
+- [Post-processing: Export to MATLAB](#post-processing-export-to-matlab)
 - [Known Issues and Limitations](#known-issues-and-limitations)
 - [License](#license)
 
@@ -267,6 +269,79 @@ plt.show()
 
 ---
 
+## Post-processing: Export to MATLAB
+
+`txt_to_matrix_extraction.py` collects the snapshot files written by a verbose (`-v`) run and saves them, together with the run parameters, in a single MATLAB file called `Data_matrix_Active_H.mat`.
+
+### Requirements
+
+- Python 3
+- NumPy
+- SciPy (used for `scipy.io.savemat`)
+
+```bash
+pip install numpy scipy
+```
+
+### What it does
+
+1. **Reads the parameters from `log.txt`.** It parses the `key: value` lines that the solver writes at start-up: `Nx`, `Ny`, `Lx`, `Ly`, `dt`, `lambda`, `kappa`, `kappa1`, `m`, `zeta`, `eta`, `a`, `b` and `tem`.
+2. **Loads the snapshots.** It loops over the steps `nstart, nstart + nint, …, nend` and reads `phi_<step>.txt` and `psi_<step>.txt`. It reports any file that is missing.
+3. **Flattens each snapshot into one row.** Each `Nx × Ny` field becomes a row of length `Nx*Ny` (row-major / C order). The result is a matrix of shape `(number of snapshots) × (Nx*Ny)`.
+4. **Writes `Data_matrix_Active_H.mat`** in the current directory.
+
+### Configuration
+
+Edit the variables at the top of the script before running it:
+
+```python
+nstart = 0          # first snapshot step
+nint   = 500000     # step between snapshots (should equal pinterval)
+nend   = 11000000   # last snapshot step
+
+phi_files = 1       # 1 = extract phi snapshots, 0 = skip
+psi_files = 1       # 1 = extract psi snapshots, 0 = skip
+epr_files = 1       # currently has no effect (see caveats)
+```
+
+The step numbers must match the numbers **in the file names**. Remember that the solver adds an offset of 49,000,000 to each snapshot number. For example, with the offset still in place, a run with `pinterval = 500000` produces `phi_49500000.txt`, `phi_50000000.txt` and so on, so `nstart` and `nend` must be set to those numbers.
+
+### Usage
+
+Run the script **from inside the simulation directory**, because it uses relative paths for `log.txt` and the snapshot files:
+
+```bash
+cd runs/test/
+python txt_to_matrix_extraction.py
+```
+
+### Contents of `Data_matrix_Active_H.mat`
+
+| Variable | Contents |
+|----------|----------|
+| `data_phi` | φ snapshots, one flattened snapshot per row |
+| `data_psi` | ψ snapshots, one flattened snapshot per row |
+| `data_epr` | Reserved for EPR snapshots (currently all zeros) |
+| `Nx`, `Ny`, `dt`, `lambda`, `kappa`, `kappa1`, `zeta`, `eta`, `m`, `a`, `b`, `temp` | Run parameters taken from `log.txt` |
+
+In MATLAB, you can recover snapshot `n` as a 2D field with:
+
+```matlab
+load('Data_matrix_Active_H.mat');
+phi_n = reshape(data_phi(n, :), Ny, Nx)';   % transpose undoes MATLAB's column-major reshape
+imagesc(phi_n); axis image; colorbar;
+```
+
+### Caveats
+
+- **`Ny`, `Lx` and `Ly` are saved incorrectly.** The dictionary passed to `savemat` uses the key `'Ny'` three times (`'Ny':Nx`… `'Ny':Lx, 'Ny':Ly`). As a result, `Lx` and `Ly` are never saved, and `Ny` ends up holding the value of `Ly`. Change the keys to `'Lx':Lx, 'Ly':Ly`.
+- **EPR snapshots are not extracted.** The `epr_files` flag exists, but there is no loop that reads `epr_<step>.txt`, so `data_epr` is all zeros.
+- **Missing snapshots shift the rows.** When a file is missing, its row is not left empty in place. Later snapshots move up one row and the unused rows remain zero at the end. Check the printed warnings before assuming that row `n` corresponds to step `nstart + n*nint`.
+- **Most parameters are stored as strings.** Only `Nx` and `Ny` are converted to integers. The other parameters are saved as text and need converting (e.g. with `str2double` in MATLAB).
+- **Memory use.** All snapshots are held in memory at once, as three arrays of `(number of snapshots) × Nx × Ny` doubles. This can be large for fine grids or many snapshots.
+
+---
+
 ## Known Issues and Limitations
 
 The code is under active development. Before relying on results, be aware of the following:
@@ -285,6 +360,10 @@ The code is under active development. Before relying on results, be aware of the
 ## License
 
 *Add your license here (e.g. MIT, GPL-3.0).*
+
+## Citation
+
+*If this code is associated with a publication, add the reference here.*
 
 ## Citation
 
