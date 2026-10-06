@@ -12,11 +12,10 @@ The repository also includes a Python script, `txt_to_matrix_extraction.py`. It 
 ---
 
 <p align="center">
-  <img src="outputs/reference/traj3d/fig_trajectories_3d.png" width="65%"><br>
-  <em>.</em>
+  <img src="plot_steady_states/states_combined.png" width="65%"><br>
+  <em> Phase diagram of the active model H: density field (φ) and stream function (ψ) along with velocity field lines (black arrow lines). (Left) Laminar flow state, (Middle) Vortex flow state, and (Right) Turbulent flow state.</em>
 </p>
 
-The implementation is validated against analytical solutions and published results, including Blake (1971), Haberman & Sayre (1958), and Zhu, Lauga & Brandt (2013).
 
 ## Contents
 
