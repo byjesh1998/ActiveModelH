@@ -18,7 +18,7 @@ The repository also includes a Python script, `txt_to_matrix_extraction.py`. It 
 
 <div align="center"> 
   
-|1. [Building and running the code](#1-building-and-running-the-code)| 2. [Model](#2-model)| 3. [Input and output files](#3-input-and-output-files)|
+|1. [Building and running the code](#1-building-and-running-the-code)| 2. [Model](#2-model)| 3. [Input and output files](#3-input-and-output-file)|
 |----|----|----|
 | 4. [Mian results](#4-main-results)| 5. [Theory](#5-theory)| 6. [Numerical method](#6-numerical-method)|
 | 7. [Limitations](#7-limitations)| 8. [References](#8-references)||
