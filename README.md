@@ -226,46 +226,15 @@ plt.colorbar(label=r"$\phi$")
 plt.show()
 ```
 
----
+### Post-processing: Export to matrix file
 
-## Post-processing: Export to MATLAB
+`txt_to_matrix_extraction.py` collects the snapshot files written and saves them, together with the run parameters, in a single matrix file.
 
-`txt_to_matrix_extraction.py` collects the snapshot files written by a verbose (`-v`) run and saves them, together with the run parameters, in a single MATLAB file called `Data_matrix_Active_H.mat`.
+#### Requirements: 
+`Python 3`, `NumPy`, `SciPy` (used for `scipy.io.savemat`)
 
-### Requirements
 
-- Python 3
-- NumPy
-- SciPy (used for `scipy.io.savemat`)
-
-```bash
-pip install numpy scipy
-```
-
-### What it does
-
-1. **Reads the parameters from `log.txt`.** It parses the `key: value` lines that the solver writes at start-up: `Nx`, `Ny`, `Lx`, `Ly`, `dt`, `lambda`, `kappa`, `kappa1`, `m`, `zeta`, `eta`, `a`, `b` and `tem`.
-2. **Loads the snapshots.** It loops over the steps `nstart, nstart + nint, …, nend` and reads `phi_<step>.txt` and `psi_<step>.txt`. It reports any file that is missing.
-3. **Flattens each snapshot into one row.** Each `Nx × Ny` field becomes a row of length `Nx*Ny` (row-major / C order). The result is a matrix of shape `(number of snapshots) × (Nx*Ny)`.
-4. **Writes `Data_matrix_Active_H.mat`** in the current directory.
-
-### Configuration
-
-Edit the variables at the top of the script before running it:
-
-```python
-nstart = 0          # first snapshot step
-nint   = 500000     # step between snapshots (should equal pinterval)
-nend   = 11000000   # last snapshot step
-
-phi_files = 1       # 1 = extract phi snapshots, 0 = skip
-psi_files = 1       # 1 = extract psi snapshots, 0 = skip
-epr_files = 1       # currently has no effect (see caveats)
-```
-
-The step numbers must match the numbers **in the file names**. Remember that the solver adds an offset of 49,000,000 to each snapshot number. For example, with the offset still in place, a run with `pinterval = 500000` produces `phi_49500000.txt`, `phi_50000000.txt` and so on, so `nstart` and `nend` must be set to those numbers.
-
-### Usage
+#### Usage
 
 Run the script **from inside the simulation directory**, because it uses relative paths for `log.txt` and the snapshot files:
 
@@ -274,16 +243,7 @@ cd runs/test/
 python txt_to_matrix_extraction.py
 ```
 
-### Contents of `Data_matrix_Active_H.mat`
-
-| Variable | Contents |
-|----------|----------|
-| `data_phi` | φ snapshots, one flattened snapshot per row |
-| `data_psi` | ψ snapshots, one flattened snapshot per row |
-| `data_epr` | Reserved for EPR snapshots (currently all zeros) |
-| `Nx`, `Ny`, `dt`, `lambda`, `kappa`, `kappa1`, `zeta`, `eta`, `m`, `a`, `b`, `temp` | Run parameters taken from `log.txt` |
-
-In MATLAB, you can recover snapshot `n` as a 2D field with:
+In MATLAB, one can recover snapshot `n` as a 2D field with:
 
 ```matlab
 load('Data_matrix_Active_H.mat');
@@ -291,39 +251,6 @@ phi_n = reshape(data_phi(n, :), Ny, Nx)';   % transpose undoes MATLAB's column-m
 imagesc(phi_n); axis image; colorbar;
 ```
 
-### Caveats
-
-- **`Ny`, `Lx` and `Ly` are saved incorrectly.** The dictionary passed to `savemat` uses the key `'Ny'` three times (`'Ny':Nx`… `'Ny':Lx, 'Ny':Ly`). As a result, `Lx` and `Ly` are never saved, and `Ny` ends up holding the value of `Ly`. Change the keys to `'Lx':Lx, 'Ly':Ly`.
-- **EPR snapshots are not extracted.** The `epr_files` flag exists, but there is no loop that reads `epr_<step>.txt`, so `data_epr` is all zeros.
-- **Missing snapshots shift the rows.** When a file is missing, its row is not left empty in place. Later snapshots move up one row and the unused rows remain zero at the end. Check the printed warnings before assuming that row `n` corresponds to step `nstart + n*nint`.
-- **Most parameters are stored as strings.** Only `Nx` and `Ny` are converted to integers. The other parameters are saved as text and need converting (e.g. with `str2double` in MATLAB).
-- **Memory use.** All snapshots are held in memory at once, as three arrays of `(number of snapshots) × Nx × Ny` doubles. This can be large for fine grids or many snapshots.
-
 ---
-
-## Known Issues and Limitations
-
-The code is under active development. Before relying on results, be aware of the following:
-
-1. **Noise is disabled.** Thermal noise terms are commented out, and `sample_noise()` is defined but never called. A perfectly uniform initial state (`phi0` constant) therefore **never evolves**. Start from a perturbed configuration by placing a `phi.txt` in the directory and running with `-c`.
-2. **Forward Euler, not Heun.** Despite the executable name, the predictor–corrector (Heun) step is commented out, so the scheme is first order. Keep `dt` small, since the κ∇⁴ term is stiff.
-3. **`-x` (AXY preset) bug.** `l = 3/16` and `k = 5/16` use integer division and evaluate to **0**. Use `3.0/16` and `5.0/16`.
-4. **`-C` does not truly resume the EPR average.** `epr_av.txt` is loaded into a real-space matrix, but the running average is accumulated in `epr_av_ft`, which starts from zero.
-5. **Unused parameters.** `lambda`, `zeta`, `Lx`, `Ly` and `D` are read and logged but do not enter the dynamics. The mobility `m` multiplies only the `a` term.
-6. **2π approximation.** Wave vectors use `6.28` instead of 2π; replace it with `2*M_PI` for accuracy.
-7. **No dealiasing during the run.** The Nyquist row and column are zeroed only at initialisation. The `Convolution` class (3/2-rule padded convolutions) exists but is currently used only to create and free the FFT descriptors.
-8. **Scalar time series are not written.** `phi_av` is never updated, and `epr_av_file` is never opened, so the corresponding outputs are empty or constant.
-
----
-
-## License
-
-*Add your license here (e.g. MIT, GPL-3.0).*
-
-## Citation
-
-*If this code is associated with a publication, add the reference here.*
-
-## Citation
-
-*If this code is associated with a publication, add the reference here.*
+## 4. Reference
+- Byjesh N Radhakrishnan et al, _Irreversibility in scalar active turbulence: the role of topological defects_, New J. Phys. 28 034601 (2026)
