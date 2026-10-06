@@ -5,12 +5,18 @@ A C++ solver for a two-dimensional **Active Model H**: a conserved scalar order 
 ---
 
 <p align="center">
+  <img src="movies/turb.gif" width="35%">  <img src="movies/turb.gif" width="35%"><br>
+  <em></em>
+</p>
+
+<p align="center">
   <img src="plot_steady_states/states_combined.png" width="65%"><br>
   <em> Phase diagram of the active model H: density field (φ) and stream function (ψ) along with velocity field lines (black arrow lines). (Left) Laminar flow state, (Middle) Vortex flow state, and (Right) Turbulent flow state.</em>
 </p>
 
 The repository also includes a Python script, `txt_to_matrix_extraction.py`. It collects the snapshot files into matrix format `.mat` file for analysis. 
 
+movies/turb.gif
 ---
 
 ## Contents
