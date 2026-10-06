@@ -96,27 +96,67 @@ Pressing **Ctrl+C** (SIGINT) stops the simulation gracefully: the current step f
 
 ## 2. Model and phase diagram
 
+
+
 ### Order-parameter dynamics
-
-The scalar field φ evolves by advection plus a Cahn–Hilliard-type (Model B) relaxation:
+We start by considering the dynamics of the local density of active swimmers $\phi(\mathbf{r},t)$ coupled to  the velocity $\mathbf{v}(\mathbf{r},t)$ of a momentum-conserving fluid
 
 $$
-\partial_t \phi + \mathbf{v}\cdot\nabla\phi = M\nabla^2\left(a \phi + b\phi^3 \right) - \kappa \nabla^4 \phi
+	\dot{\phi}+\mathbf{v} \cdot \nabla \phi =-\nabla \cdot \mathbf{J} ,
+	\quad
+	\mathbf{J} =-M\nabla \frac{\delta \mathcal{F}}{\delta \phi} + \sqrt{2MT} \mathbf{\Lambda}_{\phi} ,
 $$
+
+where $M$ is the mobility (set to 1), and $T$ the temperature. We take for the free-energy functional $\mathcal F$ a form analogous to a Landau-Ginzburg expansion:
+
+$$
+	\mathcal{F}[\phi]=\int \left [\frac{\kappa}{2}(\nabla \phi)^{2} + g(\phi)\right ]\mathrm{d}\mathbf{r} ,
+	\quad
+	g(\phi)=\frac{a}{2}\phi^{2}+\frac{b}{4}\phi ^{4} 
+$$
+
+where $(\kappa,a,b)$ are parameters. A phase separation emerges for $a < 0$ and $b,\kappa>0$.
 
 ### Flow field
-
-The velocity is obtained from a stream function ψ, which guarantees incompressibility (∇·**v** = 0):
-
-$$
-v_x = \partial_y \psi, \qquad v_y = -\partial_x \psi
-$$
-
-The stream function solves a biharmonic (Stokes) equation whose source is the active stress, with strength κ':
+We assume that the fluid is incompressible and we neglect inertial forces, yielding the Stokes equation:
 
 $$
-\eta\ \nabla^4 \psi = \kappa' \left[\ \partial_x\phi \nabla^2(\partial_y\phi) - \partial_y\phi \nabla^2(\partial_x\phi) \right]
+	\eta \nabla^{2}v_{\alpha}=\partial _{\alpha}p-\partial_{\beta}\left (\Sigma _{\alpha \beta}^{P} + \Sigma_{\alpha \beta}^{A}+\sqrt{2\eta T}\Gamma_{\alpha \beta}\right ) ,
+	\quad 
+	\nabla \cdot \vb*{v}=0 \, ,
 $$
+
+where
+
+$$
+    f^A_\alpha = \partial_\beta \Sigma_{\alpha \beta}^{A}
+$$
+
+is the active force and $f_\alpha = \partial_\beta (\Sigma^P_{\alpha \beta}+\Sigma^A_{\alpha \beta})$ is the total force.} To eliminate the pressure contribution in Eq.~\eqref{eq:stokes}, we define the stream function $\psi(\mathbf{r},t)$ as 
+
+$$
+	v_{x} = \partial _{y}\psi ,
+	\quad
+	v_{y} = -\partial _{x}\psi ,
+$$
+
+or, $v_\alpha=\epsilon_{\alpha\beta}\partial_\beta\psi$ (where $\epsilon_{\alpha\beta}=-\epsilon_{\beta\alpha}$, $\epsilon_{xy}=+1$ is the Levi-Civita symbol in 2 dimensions). By taking the curl of Eq.~\eqref{eq:stokes} and using Eq.~\eqref{eq:streamF}, the Stokes equation reduces to
+
+$$
+	\eta \nabla ^{4} \psi =\left (\kappa+\zeta \right )[(\partial_x \phi)\nabla ^2 (\partial_y \phi)-(\partial_y \phi)\nabla ^2 (\partial_x \phi)]-\sqrt{2\eta T}\nabla ^2 \Lambda_\psi ,
+$$
+
+where $\Lambda_{\psi}$ is a scalar Gaussian noise with zero mean and correlations given by~[\ref{ap:stream_derivation}]
+
+The passive and active contributions to the deviatoric stress, respectively $\Sigma_{\alpha \beta}^{P}$ and $\Sigma_{\alpha \beta}^{A}$, read
+
+$$
+	\Sigma_{\alpha \beta}^{P} = -\kappa\left [ (\partial _{\alpha}\phi)(\partial _{\beta}\phi) - \frac{1}{2}|\nabla \phi|^{2} \delta_{\alpha \beta}\right ] ,
+	\quad
+	\Sigma_{\alpha \beta}^{A} = -\zeta\left[ (\partial _{\alpha}\phi)(\partial _{\beta}\phi) - \frac{1}{2}|\nabla \phi|^{2} \delta_{\alpha \beta}\right ] ,
+$$
+
+where $\zeta$ is the activity parameter~\cite{cates2015}. In passive systems, the expression of $\Sigma_{\alpha \beta}^{P}$ can be derived from the free-energy functional $\mathcal{F}[\phi]$~\cite{Chaikin_Lubensky_1995}. To the lowest order in powers of $\phi$ and its gradient, the term $\partial _{\alpha}\phi\partial _{\beta}\phi-\frac{1}{2}|\nabla \phi|^{2} \delta_{\alpha \beta}$ is the only traceless symmetric tensor that can be constructed, so that we assume that $\Sigma_{\alpha \beta}^{A}$ must be proportional to it. The sign of $\zeta$ distinguishes the cases of contractile ($\zeta< 0$) and extensile ($\zeta >0$) swimmers.
 
 
 ### Parameters
