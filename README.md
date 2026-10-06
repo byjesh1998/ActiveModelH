@@ -123,7 +123,7 @@ We assume that the fluid is incompressible and we neglect inertial forces, yield
 $$
 	\eta \nabla^{2}v_{\alpha}=\partial _{\alpha}p-\partial_{\beta}\left (\Sigma _{\alpha \beta}^{P} + \Sigma_{\alpha \beta}^{A}+\sqrt{2\eta T}\Gamma_{\alpha \beta}\right ) ,
 	\quad 
-	\nabla \cdot \vb*{v}=0 \, ,
+	\nabla \cdot \mathbf{v}=0 ,
 $$
 
 where
@@ -132,7 +132,7 @@ $$
     f^A_\alpha = \partial_\beta \Sigma_{\alpha \beta}^{A}
 $$
 
-is the active force and $f_\alpha = \partial_\beta (\Sigma^P_{\alpha \beta}+\Sigma^A_{\alpha \beta})$ is the total force.} To eliminate the pressure contribution in Eq.~\eqref{eq:stokes}, we define the stream function $\psi(\mathbf{r},t)$ as 
+is the active force and $f_\alpha = \partial_\beta (\Sigma^P_{\alpha \beta}+\Sigma^A_{\alpha \beta})$ is the total force.} To eliminate the pressure contribution in Stokes equation, we define the stream function $\psi(\mathbf{r},t)$ as 
 
 $$
 	v_{x} = \partial _{y}\psi ,
@@ -140,13 +140,13 @@ $$
 	v_{y} = -\partial _{x}\psi ,
 $$
 
-or, $v_\alpha=\epsilon_{\alpha\beta}\partial_\beta\psi$ (where $\epsilon_{\alpha\beta}=-\epsilon_{\beta\alpha}$, $\epsilon_{xy}=+1$ is the Levi-Civita symbol in 2 dimensions). By taking the curl of Eq.~\eqref{eq:stokes} and using Eq.~\eqref{eq:streamF}, the Stokes equation reduces to
+or, $v_\alpha=\epsilon_{\alpha\beta}\partial_\beta\psi$ (where $\epsilon_{\alpha\beta}=-\epsilon_{\beta\alpha}$, $\epsilon_{xy}=+1$ is the Levi-Civita symbol in 2 dimensions). By taking the curl of Stokes equation and using Eq.~\eqref{eq:streamF}, the Stokes equation reduces to
 
 $$
 	\eta \nabla ^{4} \psi =\left (\kappa+\zeta \right )[(\partial_x \phi)\nabla ^2 (\partial_y \phi)-(\partial_y \phi)\nabla ^2 (\partial_x \phi)]-\sqrt{2\eta T}\nabla ^2 \Lambda_\psi ,
 $$
 
-where $\Lambda_{\psi}$ is a scalar Gaussian noise with zero mean and correlations given by~[\ref{ap:stream_derivation}]
+where $\Lambda_{\phi}$ and $\Lambda_{\psi}$ are Gaussian noise with zero mean and delta correlations.
 
 The passive and active contributions to the deviatoric stress, respectively $\Sigma_{\alpha \beta}^{P}$ and $\Sigma_{\alpha \beta}^{A}$, read
 
@@ -156,7 +156,7 @@ $$
 	\Sigma_{\alpha \beta}^{A} = -\zeta\left[ (\partial _{\alpha}\phi)(\partial _{\beta}\phi) - \frac{1}{2}|\nabla \phi|^{2} \delta_{\alpha \beta}\right ] ,
 $$
 
-where $\zeta$ is the activity parameter~\cite{cates2015}. In passive systems, the expression of $\Sigma_{\alpha \beta}^{P}$ can be derived from the free-energy functional $\mathcal{F}[\phi]$~\cite{Chaikin_Lubensky_1995}. To the lowest order in powers of $\phi$ and its gradient, the term $\partial _{\alpha}\phi\partial _{\beta}\phi-\frac{1}{2}|\nabla \phi|^{2} \delta_{\alpha \beta}$ is the only traceless symmetric tensor that can be constructed, so that we assume that $\Sigma_{\alpha \beta}^{A}$ must be proportional to it. The sign of $\zeta$ distinguishes the cases of contractile ($\zeta< 0$) and extensile ($\zeta >0$) swimmers.
+where $\zeta$ is the activity parameter. In passive systems, the expression of $\Sigma_{\alpha \beta}^{P}$ can be derived from the free-energy functional $\mathcal{F}[\phi]$. The sign of $\zeta$ distinguishes the cases of contractile ($\zeta< 0$) and extensile ($\zeta >0$) swimmers.
 
 
 ### Parameters
