@@ -43,7 +43,7 @@ The repository also includes a Python script, `txt_to_matrix_extraction.py`. It 
 
 ## 1. Building and running the code
 
-To compile the code, it requires Cmake, Armadillo linear algebra libraries and MKL libraries. After downloading both the libraries, the code can be compiled
+To compile the code, it requires  `C++11 (or later) compiler`, `Cmake`, `Armadillo` linear algebra libraries and `Intel oneMKL` libraries. After downloading both the libraries, the code can be compiled
 as the following.
 
 ### Set up the MKL environment (path depends on your install)
