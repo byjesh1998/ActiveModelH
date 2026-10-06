@@ -1,4 +1,4 @@
-# ActiveModelH_Heuns
+# ActiveModelH_2D
 This program is to solve the Active model-H using Heun algorithm.
 
 
