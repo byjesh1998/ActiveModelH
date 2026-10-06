@@ -2,27 +2,6 @@
 This program is to solve the Active model-H using Heun algorithm.
 
 
-
-To compile the code, it requires Cmake, Armadillo linear algebra libraries and MKL libraries. After downloading both the libraries, the code can be compiled
-using the command
-
-```
-$ mkdir build
-$ cd build
-$ cmake -S ../ -B .
-```
-
-to make the executable file (in the same terminal)
-```
-$ cd build
-$ make
-```
-Now the executable file **activeH_heun.exe** will be created. To run the program
-```
-$ ./activeH_heun
-```
-
-
 # Active Model H: 2D Pseudo-Spectral Solver
 
 A C++ solver for a two-dimensional **active Model H**: a conserved scalar order parameter φ (e.g. a concentration or composition field) coupled to an incompressible Stokes flow that is driven by an active stress. The equations are integrated with a pseudo-spectral method on a periodic grid, using **Intel MKL** for FFTs and **Armadillo** for array algebra.
@@ -34,16 +13,84 @@ The repository also includes a Python script, `txt_to_matrix_extraction.py`. It 
 
 ## Table of Contents
 
+1. [Building](#1-building-and-running-the-code)
 - [Model](#model)
 - [Numerical Method](#numerical-method)
 - [Requirements](#requirements)
-- [Building](#building)
+- [Building](#1-building-and-running-the-code)
 - [Usage](#usage)
 - [Input File (`in_data`)](#input-file-in_data)
 - [Output Files](#output-files)
 - [Post-processing: Export to MATLAB](#post-processing-export-to-matlab)
 - [Known Issues and Limitations](#known-issues-and-limitations)
 - [License](#license)
+
+---
+
+## Building and running the code
+
+To compile the code, it requires Cmake, Armadillo linear algebra libraries and MKL libraries. After downloading both the libraries, the code can be compiled
+as the following.
+
+### Set up the MKL environment (path depends on your install)
+The exact MKL link line depends on your compiler, platform and threading choice. Intel's [oneMKL Link Line Advisor](https://www.intel.com/content/www/us/en/developer/tools/oneapi/onemkl-link-line-advisor.html) will generate the correct flags for you.
+
+
+```
+> source /opt/intel/oneapi/setvars.sh        # or: source /opt/intel/mkl/bin/mklvars.sh intel64
+
+```
+
+### Configure and build
+
+```
+> mkdir -p build
+> cd build
+
+> cmake -S ../ -B .
+
+```
+
+ ### Run
+
+To make the executable file (in the same terminal)
+
+```
+> make
+```
+
+Now the executable file **activeH_heun.exe** will be created. To run the program
+
+```bash
+./activeH_heun <in/out dir>/ [options]
+```
+
+The first argument is the simulation directory. It must contain an `in_data` parameter file, and all output is written there. **Include the trailing slash**, since file names are built by simple string concatenation (`dir + "phi.txt"`).
+
+Running without arguments prints the help message.
+
+### Options
+
+| Flag | Description |
+|------|-------------|
+| `-C <steps>` | Continue from `phi.txt`, `psi.txt` in the simulation directory. `<steps>` is the number of steps used in the previous average. |
+| `-v` | Verbose: write the full state  at every print interval |
+| `-n` | Disable noise in the $\phi$ equation |
+| `-N` | Disable noise in the $\psi$ equation |
+
+### Examples
+
+```bash
+# Fresh run with snapshots
+./activeH_heun runs/test/ -v
+
+# Continue a run (previous run had 1,000,000 steps)
+./activeH_heun runs/test/ -C 1000000
+```
+
+### Stopping a run
+
+Pressing **Ctrl+C** (SIGINT) stops the simulation gracefully: the current step finishes and the final state is still written to disk, so the run can be resumed with `-c`.
 
 ---
 
@@ -127,66 +174,7 @@ These must be provided by a separate C source file (the MKL FFT wrapper) that is
 
 ---
 
-## Building
 
-Example build with GCC (adjust file names and paths to your setup):
-
-```bash
-# Compile the MKL FFT wrapper
-gcc -O3 -c fft_wrapper.c -I${MKLROOT}/include -o fft_wrapper.o
-
-# Compile and link the solver
-g++ -O3 -std=c++11 activeH_heun.cpp fft_wrapper.o -o activeH_heun \
-    -I${MKLROOT}/include \
-    -larmadillo \
-    -L${MKLROOT}/lib/intel64 -lmkl_intel_lp64 -lmkl_sequential -lmkl_core \
-    -lpthread -lm -ldl
-```
-
-The exact MKL link line depends on your compiler, platform and threading choice. Intel's [oneMKL Link Line Advisor](https://www.intel.com/content/www/us/en/developer/tools/oneapi/onemkl-link-line-advisor.html) will generate the correct flags for you.
-
----
-
-## Usage
-
-```bash
-./activeH_heun <in/out dir>/ [options]
-```
-
-The first argument is the simulation directory. It must contain an `in_data` parameter file, and all output is written there. **Include the trailing slash**, since file names are built by simple string concatenation (`dir + "phi.txt"`).
-
-Running without arguments prints the help message.
-
-### Options
-
-| Flag | Description |
-|------|-------------|
-| `-c` | Continue from `phi.txt`, `psi.txt`, `vx.txt`, `vy.txt` in the simulation directory |
-| `-C <steps>` | Continue from files **and** continue the EPR average. Implies `-c` and `-a`. `<steps>` is the number of steps used in the previous average. Requires `epr_av.txt` |
-| `-a` | Compute and time-average the EPR |
-| `-v` | Verbose: write the full state (and EPR, if enabled) at every print interval |
-| `-n` | Disable noise in the φ equation |
-| `-N` | Disable noise in the ψ equation |
-| `-x` | Override parameters with the preset "AXY" values |
-
-### Examples
-
-```bash
-# Fresh run with EPR averaging and snapshots
-./activeH_heun runs/test/ -a -v
-
-# Continue a previous run
-./activeH_heun runs/test/ -c -a -v
-
-# Continue a run and its EPR average (previous run had 1,000,000 steps)
-./activeH_heun runs/test/ -C 1000000
-```
-
-### Stopping a run
-
-Pressing **Ctrl+C** (SIGINT) stops the simulation gracefully: the current step finishes and the final state is still written to disk, so the run can be resumed with `-c`.
-
----
 
 ## Input File (`in_data`)
 
