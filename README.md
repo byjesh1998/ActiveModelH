@@ -11,6 +11,25 @@ The repository also includes a Python script, `txt_to_matrix_extraction.py`. It 
 
 ---
 
+<p align="center">
+  <img src="outputs/reference/traj3d/fig_trajectories_3d.png" width="65%"><br>
+  <em>.</em>
+</p>
+
+The implementation is validated against analytical solutions and published results, including Blake (1971), Haberman & Sayre (1958), and Zhu, Lauga & Brandt (2013).
+
+## Contents
+
+
+<div align="center"> 
+  
+|1. [Building](#1-building-and-running-the-code)| 2. [Repository structure](#2-repository-structure)| 3. [Input and output files](#3-input-and-output-files)|
+|----|----|----|
+| 4. [Mian results](#4-main-results)| 5. [Theory](#5-theory)| 6. [Numerical method](#6-numerical-method)|
+| 7. [Limitations](#7-limitations)| 8. [References](#8-references)||
+
+</div>
+
 ## Table of Contents
 
 1. [Building](#1-building-and-running-the-code)
@@ -27,7 +46,7 @@ The repository also includes a Python script, `txt_to_matrix_extraction.py`. It 
 
 ---
 
-## Building and running the code
+## 1. Building and running the code
 
 To compile the code, it requires Cmake, Armadillo linear algebra libraries and MKL libraries. After downloading both the libraries, the code can be compiled
 as the following.
