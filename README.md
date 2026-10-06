@@ -20,7 +20,7 @@ The repository also includes a Python script, `txt_to_matrix_extraction.py`. It 
 
 <div align="center"> 
   
-|1. [Building and running the code](#1-building-and-running-the-code)| 2. [Model and phases](#2-model-and-phases)| 3. [Input and output files](#3-input-and-output-file)|4. [reference](#4-reference)|
+|1. [Building and running the code](#1-building-and-running-the-code)| 2. [Model and phase diagram](#2-model-and-phase-diagram)| 3. [Input and output files](#3-input-and-output-file)|4. [reference](#4-reference)|
 |----|----|----|----|
 
 </div>
@@ -94,7 +94,7 @@ Pressing **Ctrl+C** (SIGINT) stops the simulation gracefully: the current step f
 
 ---
 
-## 2. Model and phases
+## 2. Model and phase diagram
 
 ### Order-parameter dynamics
 
