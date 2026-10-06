@@ -1,13 +1,6 @@
-# ActiveModelH_2D
-This program is to solve the Active model-H using Heun algorithm.
+# ActiveModelH: 2D Pseudo-Spectral Solver
 
-
-# Active Model H: 2D Pseudo-Spectral Solver
-
-A C++ solver for a two-dimensional **active Model H**: a conserved scalar order parameter φ (e.g. a concentration or composition field) coupled to an incompressible Stokes flow that is driven by an active stress. The equations are integrated with a pseudo-spectral method on a periodic grid, using **Intel MKL** for FFTs and **Armadillo** for array algebra.
-
-
-The repository also includes a Python script, `txt_to_matrix_extraction.py`. It collects the snapshot files into matrix format `.mat` file for analysis. It also include folders with code to make steady state phase diagram as well as movie of the evolution of the system.
+A C++ solver for a two-dimensional **Active Model H**: a conserved scalar order parameter $\psi$ (e.g. a density or composition field) coupled to an incompressible Stokes flow that is driven by an active stress. The equations are integrated with a pseudo-spectral method on a periodic grid, using **Intel MKL** for FFTs and **Armadillo** for array algebra. 
 
 ---
 
@@ -16,13 +9,16 @@ The repository also includes a Python script, `txt_to_matrix_extraction.py`. It 
   <em> Phase diagram of the active model H: density field (φ) and stream function (ψ) along with velocity field lines (black arrow lines). (Left) Laminar flow state, (Middle) Vortex flow state, and (Right) Turbulent flow state.</em>
 </p>
 
+The repository also includes a Python script, `txt_to_matrix_extraction.py`. It collects the snapshot files into matrix format `.mat` file for analysis. 
+
+---
 
 ## Contents
 
 
 <div align="center"> 
   
-|1. [Building](#1-building-and-running-the-code)| 2. [Repository structure](#2-repository-structure)| 3. [Input and output files](#3-input-and-output-files)|
+|1. [Building and running the code](#1-building-and-running-the-code)| 2. [Repository structure](#2-repository-structure)| 3. [Input and output files](#3-input-and-output-files)|
 |----|----|----|
 | 4. [Mian results](#4-main-results)| 5. [Theory](#5-theory)| 6. [Numerical method](#6-numerical-method)|
 | 7. [Limitations](#7-limitations)| 8. [References](#8-references)||
@@ -31,7 +27,7 @@ The repository also includes a Python script, `txt_to_matrix_extraction.py`. It 
 
 ## Table of Contents
 
-1. [Building](#1-building-and-running-the-code)
+1. [Building and running the code](#1-building-and-running-the-code)
 - [Model](#model)
 - [Numerical Method](#numerical-method)
 - [Requirements](#requirements)
