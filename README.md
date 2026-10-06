@@ -7,18 +7,12 @@ $\color{red}{\large \text{Active Model H: scalar field theory for dense active s
   <em></em>
 </p>
 
-<p align="center">
-  <img src="plot_steady_states/states_combined.png" width="65%"><br>
-  <em> Phase diagram of the active model H: density field (φ) and stream function (ψ) along with velocity field lines (black arrow lines). (Left) Laminar flow state, (Middle) Vortex flow state, and (Right) Turbulent flow state.</em>
-</p>
 
 A C++ solver for a two-dimensional **Active Model H**: a conserved scalar order parameter $\psi$ (e.g. a density or composition field) coupled to an incompressible Stokes flow that is driven by an active stress. The equations are integrated with a pseudo-spectral method on a periodic grid, using **Intel MKL** for FFTs and **Armadillo** for array algebra. 
 
----
 
 The repository also includes a Python script, `txt_to_matrix_extraction.py`. It collects the snapshot files into matrix format `.mat` file for analysis. 
 
-movies/turb.gif
 ---
 
 ## Contents
@@ -151,6 +145,11 @@ $$
 - **FFTs:** Intel MKL DFTI, called through external C wrapper functions (see [Building](#building)).
 
 > **Grid spacing.** Wave vectors are built as `2π·n / N`, so the lattice spacing is effectively 1 and the box size is `Nx × Ny`. The `Lx` and `Ly` parameters are read but not currently used.
+
+<p align="center">
+  <img src="plot_steady_states/states_combined.png" width="65%"><br>
+  <em> Phase diagram of the active model H: density field (φ) and stream function (ψ) along with velocity field lines (black arrow lines). (Left) Laminar flow state, (Middle) Vortex flow state, and (Right) Turbulent flow state.</em>
+</p>
 
 ---
 
