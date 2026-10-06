@@ -162,35 +162,10 @@ $$
 
 ---
 
-## Requirements
 
-| Dependency | Purpose |
-|------------|---------|
-| C++11 (or later) compiler | e.g. `g++`, `icpx` |
-| [Intel oneMKL](https://www.intel.com/content/www/us/en/developer/tools/oneapi/onemkl.html) | FFTs (DFTI interface) |
-| [Armadillo](https://arma.sourceforge.net/) | Matrix/array operations and file I/O |
-| [Boost.Iostreams](https://www.boost.org/doc/libs/release/libs/iostreams/) | "Tee" stream that writes the log to both the terminal and `log.txt` |
+## 3. Input and output File
 
-### External FFT wrapper
-
-The main file declares, but does not define, the following C functions:
-
-```c
-void create_descriptor_handles(int Nx, int Ny);
-void fft_forward(double *in, MKL_Complex16 *out);
-void fft_backward(MKL_Complex16 *in, double *out);
-void fft_padded_forward(double *in, MKL_Complex16 *out);
-void fft_padded_backward(MKL_Complex16 *in, double *out);
-void free_descriptor_handles();
-```
-
-These must be provided by a separate C source file (the MKL FFT wrapper) that is compiled and linked together with the main program.
-
----
-
-
-
-## Input File (`in_data`)
+### Input file
 
 A plain-text file with one `key = value` pair per line. Whitespace is ignored and lines without `=` are skipped (so they can be used as comments). **All 21 keys are required**, and any unrecognised key aborts the program.
 
@@ -217,35 +192,27 @@ a      = -0.25
 b      = 0.25
 
 # Initial conditions (uniform values)
-phi0 = 0.0
+phi0 = 0.1
 psi0 = 0.0
-vx0  = 0.0
-vy0  = 0.0
 ```
 
 **Notes**
 
-- Setting `lambda` also sets `kappa` to the same value. Put `kappa` **after** `lambda` so that your chosen value of κ is the one that is used.
 - `Nx` and `Ny` should be even; multiples of 4 (ideally powers of 2) are recommended, because the padding buffers are sized `3N/2` and `3N/4 + 1`.
-- For phase separation, choose `a < 0` and `b > 0` in the usual φ⁴ convention.
+- For phase separation, choose `a < 0`,`b > 0` and `\kappa > 0` in the usual $\phi^4$ convention.
 
 ---
 
-## Output Files
+### Output Files
 
 All files are written to the simulation directory. Fields are saved as plain-text `Nx × Ny` matrices (Armadillo `raw_ascii` format).
 
 | File | When | Contents |
 |------|------|----------|
 | `log.txt` | Always | Copy of everything printed to the terminal |
-| `phi.txt`, `psi.txt`, `vx.txt`, `vy.txt` | End of run | Final state (also the restart files for `-c` / `-C`) |
+| `phi.txt`, `psi.txt`, `vx.txt`, `vy.txt` | End of run | Final state (also the restart files for  `-C`) |
 | `phi_0.txt`, `psi_0.txt`, `vx_0.txt`, `vy_0.txt` | Start, with `-v` | Initial state |
 | `phi_<n>.txt`, `psi_<n>.txt`, `vx_<n>.txt`, `vy_<n>.txt` | Every `pinterval` steps, with `-v` | Snapshots |
-| `epr_<n>.txt`, `epr_av_<n>.txt` | Every `pinterval` steps, with `-v -a` | Instantaneous and time-averaged EPR density |
-| `epr.txt`, `epr_av.txt` | End of run, with `-a` | Final instantaneous and averaged EPR density |
-| `vx_av.txt`, `vy_av.txt`, `v_av.txt`, `phi_av.txt` | Created at start | Reserved for scalar time series (mostly unused at the moment) |
-
-> **Snapshot numbering:** `<n>` is the current step **plus a hard-coded offset of 49,000,000** (`to_string(i+49000000)`). Change or remove this offset in the source to suit your run.
 
 ### Quick look with Python
 
