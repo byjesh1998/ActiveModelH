@@ -71,6 +71,8 @@ Running without arguments prints the help message.
 
 ### Options
 
+<div align="center"> 
+	
 | Flag | Description |
 |------|-------------|
 | `-C <steps>` | Continue from `phi.txt`, `psi.txt` in the simulation directory. `<steps>` is the number of steps used in the previous average. |
@@ -78,6 +80,7 @@ Running without arguments prints the help message.
 | `-n` | Disable noise in the $\phi$ equation |
 | `-N` | Disable noise in the $\psi$ equation |
 
+</div> 
 ### Examples
 
 ```bash
@@ -161,18 +164,19 @@ where $\zeta$ is the activity parameter. In passive systems, the expression of $
 
 ### Parameters
 
+<div align="center"> 
+	
 | Symbol | Code variable | `in_data` key | Meaning |
 |--------|---------------|---------------|---------|
-| λ | `l` | `lambda` | Active coefficient λ (currently only read, not used in the dynamics) |
 | κ | `k` | `kappa` | Interfacial stiffness (square-gradient coefficient) |
-| κ' | `k1` | `kappa1` | Active stress coefficient |
-| ζ | `zeta` | `zeta` | Active coefficient ζ (currently only read, not used in the dynamics) |
+| ζ | `k'-k` | `kappa1-kappa` | Active stress coefficient |
 | m | `m` | `m` | Mobility (currently multiplies only the `a` term) |
 | η | `eta` | `eta` | Viscosity |
 | T | `tem` | `tem` | Temperature |
 | a, b | `a`, `b` | `a`, `b` | Coefficients of the φ² / φ⁴ bulk free energy |
-| D | `Diff` | `D` | Noise strength (read but noise is currently disabled) |
 
+</div> 
+	
 ---
 
 ### Numerical Method
@@ -182,9 +186,6 @@ where $\zeta$ is the activity parameter. In passive systems, the expression of $
 - **Nonlinear terms** (φ³, advection **v**·∇φ, the active source term) are evaluated in real space and transformed back.
 - **Stream function:** obtained by dividing by |q|⁴ in Fourier space, with a small regulariser (ε = 10⁻⁸) to avoid division by zero at q = 0.
 - **Time stepping:** explicit forward Euler with time step `dt`.
-- **FFTs:** Intel MKL DFTI, called through external C wrapper functions (see [Building](#building)).
-
-> **Grid spacing.** Wave vectors are built as `2π·n / N`, so the lattice spacing is effectively 1 and the box size is `Nx × Ny`. The `Lx` and `Ly` parameters are read but not currently used.
 
 ### Phase digram
 
