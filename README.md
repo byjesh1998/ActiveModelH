@@ -20,7 +20,7 @@ The repository also includes a Python script, `txt_to_matrix_extraction.py`. It 
 
 <div align="center"> 
   
-|1. [Building and running the code](#1-building-and-running-the-code)| 2. [Model](#2-model)| 3. [Input and output files](#3-input-and-output-file)|4. [reference](#4-reference)|
+|1. [Building and running the code](#1-building-and-running-the-code)| 2. [Model and phases](#2-model-and-phases)| 3. [Input and output files](#3-input-and-output-file)|4. [reference](#4-reference)|
 |----|----|----|----|
 
 </div>
@@ -94,7 +94,7 @@ Pressing **Ctrl+C** (SIGINT) stops the simulation gracefully: the current step f
 
 ---
 
-## 2. Model
+## 2. Model and phases
 
 ### Order-parameter dynamics
 
@@ -135,7 +135,7 @@ $$
 
 ---
 
-## Numerical Method
+### Numerical Method
 
 - **Spatial discretisation:** pseudo-spectral on a periodic `Nx × Ny` grid. Fields are stored in Fourier space as real-to-complex transforms of size `Nx × (Ny/2 + 1)`.
 - **Derivatives:** computed exactly in Fourier space by multiplication with *i q*.
@@ -145,6 +145,8 @@ $$
 - **FFTs:** Intel MKL DFTI, called through external C wrapper functions (see [Building](#building)).
 
 > **Grid spacing.** Wave vectors are built as `2π·n / N`, so the lattice spacing is effectively 1 and the box size is `Nx × Ny`. The `Lx` and `Ly` parameters are read but not currently used.
+
+### Phase digram
 
 <p align="center">
   <img src="plot_steady_states/states_combined.png" width="65%"><br>
