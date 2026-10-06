@@ -18,7 +18,7 @@ The repository also includes a Python script, `txt_to_matrix_extraction.py`. It 
 
 <div align="center"> 
   
-|1. [Building and running the code](#1-building-and-running-the-code)| 2. [Repository structure](#2-repository-structure)| 3. [Input and output files](#3-input-and-output-files)|
+|1. [Building and running the code](#1-building-and-running-the-code)| 2. [Model](#2-model)| 3. [Input and output files](#3-input-and-output-files)|
 |----|----|----|
 | 4. [Mian results](#4-main-results)| 5. [Theory](#5-theory)| 6. [Numerical method](#6-numerical-method)|
 | 7. [Limitations](#7-limitations)| 8. [References](#8-references)||
@@ -50,14 +50,14 @@ as the following.
 The exact MKL link line depends on your compiler, platform and threading choice. Intel's [oneMKL Link Line Advisor](https://www.intel.com/content/www/us/en/developer/tools/oneapi/onemkl-link-line-advisor.html) will generate the correct flags for you.
 
 
-```
+```bash
 > source /opt/intel/oneapi/setvars.sh        # or: source /opt/intel/mkl/bin/mklvars.sh intel64
 
 ```
 
 ### Configure and build
 
-```
+```bash
 > mkdir -p build
 > cd build
 
@@ -69,14 +69,14 @@ The exact MKL link line depends on your compiler, platform and threading choice.
 
 To make the executable file (in the same terminal)
 
-```
+```bash
 > make
 ```
 
 Now the executable file **activeH_heun.exe** will be created. To run the program
 
 ```bash
-./activeH_heun <in/out dir>/ [options]
+> ./activeH_heun <in/out dir>/ [options]
 ```
 
 The first argument is the simulation directory. It must contain an `in_data` parameter file, and all output is written there. **Include the trailing slash**, since file names are built by simple string concatenation (`dir + "phi.txt"`).
@@ -96,10 +96,10 @@ Running without arguments prints the help message.
 
 ```bash
 # Fresh run with snapshots
-./activeH_heun runs/test/ -v
+> ./activeH_heun runs/test/ -v
 
 # Continue a run (previous run had 1,000,000 steps)
-./activeH_heun runs/test/ -C 1000000
+> ./activeH_heun runs/test/ -C 1000000
 ```
 
 ### Stopping a run
@@ -108,7 +108,7 @@ Pressing **Ctrl+C** (SIGINT) stops the simulation gracefully: the current step f
 
 ---
 
-## Model
+## 2. Model
 
 ### Order-parameter dynamics
 
