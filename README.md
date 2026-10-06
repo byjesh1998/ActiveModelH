@@ -1,6 +1,6 @@
 # ActiveModelH: 2D Pseudo-Spectral Solver
 
-$\color{red}{\large \text{Active Model H: scalar field theory for dense active suspensions. In the contractile limit, model exhibit rich}}$ $\color{red}{\large \text{phase behaviour from laminar to turbulent flow.  }}$
+$\color{red}{\large \text{Active Model H: scalar field theory for dense active suspensions. In the contractile limit, model exhibit}}$ $\color{red}{\large \text{rich phase behavior from laminar to turbulent flow.  }}$
 
 <p align="center">
   <img src="movies/lam.gif" width="49%">  <img src="movies/turb.gif" width="49%"><br>
