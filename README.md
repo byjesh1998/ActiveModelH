@@ -1,11 +1,9 @@
 # ActiveModelH: 2D Pseudo-Spectral Solver
 
-A C++ solver for a two-dimensional **Active Model H**: a conserved scalar order parameter $\psi$ (e.g. a density or composition field) coupled to an incompressible Stokes flow that is driven by an active stress. The equations are integrated with a pseudo-spectral method on a periodic grid, using **Intel MKL** for FFTs and **Armadillo** for array algebra. 
-
----
+$\color{red}{\text{Active Model H: scalar field theory for dense active suspensions.}}$ $\color{red}{\text{In the contractile limit, model exhibit rich phase behaviour from laminar to turbulent flow.  }}$
 
 <p align="center">
-  <img src="movies/turb.gif" width="35%">  <img src="movies/turb.gif" width="35%"><br>
+  <img src="movies/lam.gif" width="49%">  <img src="movies/turb.gif" width="49%"><br>
   <em></em>
 </p>
 
@@ -13,6 +11,10 @@ A C++ solver for a two-dimensional **Active Model H**: a conserved scalar order 
   <img src="plot_steady_states/states_combined.png" width="65%"><br>
   <em> Phase diagram of the active model H: density field (φ) and stream function (ψ) along with velocity field lines (black arrow lines). (Left) Laminar flow state, (Middle) Vortex flow state, and (Right) Turbulent flow state.</em>
 </p>
+
+A C++ solver for a two-dimensional **Active Model H**: a conserved scalar order parameter $\psi$ (e.g. a density or composition field) coupled to an incompressible Stokes flow that is driven by an active stress. The equations are integrated with a pseudo-spectral method on a periodic grid, using **Intel MKL** for FFTs and **Armadillo** for array algebra. 
+
+---
 
 The repository also includes a Python script, `txt_to_matrix_extraction.py`. It collects the snapshot files into matrix format `.mat` file for analysis. 
 
