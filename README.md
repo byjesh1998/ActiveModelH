@@ -18,26 +18,10 @@ The repository also includes a Python script, `txt_to_matrix_extraction.py`. It 
 
 <div align="center"> 
   
-|1. [Building and running the code](#1-building-and-running-the-code)| 2. [Model](#2-model)| 3. [Input and output files](#3-input-and-output-file)|
-|----|----|----|
-| 4. [Mian results](#4-main-results)| 5. [Theory](#5-theory)| 6. [Numerical method](#6-numerical-method)|
-| 7. [Limitations](#7-limitations)| 8. [References](#8-references)||
+|1. [Building and running the code](#1-building-and-running-the-code)| 2. [Model](#2-model)| 3. [Input and output files](#3-input-and-output-file)|4. [reference](#4-reference)|
+|----|----|----|----|
 
 </div>
-
-## Table of Contents
-
-1. [Building and running the code](#1-building-and-running-the-code)
-- [Model](#model)
-- [Numerical Method](#numerical-method)
-- [Requirements](#requirements)
-- [Building](#1-building-and-running-the-code)
-- [Usage](#usage)
-- [Input File (`in_data`)](#input-file-in_data)
-- [Output Files](#output-files)
-- [Post-processing: Export to MATLAB](#post-processing-export-to-matlab)
-- [Known Issues and Limitations](#known-issues-and-limitations)
-- [License](#license)
 
 ---
 
